@@ -20,9 +20,10 @@ export default {
 </script>
 <style lang="less">
 #app{
-  background-color: #eeeeee;
+  overflow: hidden;
   .main{
     width: 1500px;
+    height: 100%;
     margin: 0 auto;
   }
 }

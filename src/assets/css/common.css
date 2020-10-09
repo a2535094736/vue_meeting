@@ -2,6 +2,8 @@ html,body,#app{
     margin: 0;
     padding: 0;
     height: 100%;
+    background-color: #eeeeee;
+    font-family: PingFangSC-Medium, PingFang SC;
 }
 .el-menu.el-menu--horizontal {  
     border-bottom: solid 1px #29282e;

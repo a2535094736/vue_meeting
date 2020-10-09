@@ -7,7 +7,10 @@ import {
     Submenu,
     Container,
     Breadcrumb,
-    BreadcrumbItem
+    BreadcrumbItem,
+    Row,
+    Col,
+    Card
 
 } from "element-ui";
 Vue.use(Button);
@@ -18,3 +21,6 @@ Vue.use(Container);
 Vue.use(Submenu);
 Vue.use(Breadcrumb);
 Vue.use(BreadcrumbItem);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Card);
