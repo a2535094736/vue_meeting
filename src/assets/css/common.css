@@ -10,3 +10,11 @@ html,body,#app{
     color: #2D82F0;
     text-decoration: none;
 }
+.el-breadcrumb{
+    margin: 20px 0;
+    font-size: 18px;
+}
+.breadcrumbcolor{
+    color: #2D8CF0;
+    margin-right: 5px;
+}
