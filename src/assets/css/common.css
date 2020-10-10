@@ -3,7 +3,7 @@ html,body,#app{
     padding: 0;
     height: 100%;
     background-color: #eeeeee;
-    font-family: PingFangSC-Medium, PingFang SC;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 .el-menu.el-menu--horizontal {  
     border-bottom: solid 1px #29282e;
@@ -11,12 +11,4 @@ html,body,#app{
 .el-menu-item a{
     color: #2D82F0;
     text-decoration: none;
-}
-.el-breadcrumb{
-    margin: 20px 0;
-    font-size: 18px;
-}
-.breadcrumbcolor{
-    color: #2D8CF0;
-    margin-right: 5px;
 }

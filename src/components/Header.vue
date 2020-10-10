@@ -1,34 +1,31 @@
 <template>
   <div class="container_header">
-      <div class="header">
-    <el-menu
-      default-active="1"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
-      background-color="#29282E"
-      text-color="#2D82F0"
-      active-text-color="#2D82F0"
-    >
-      <el-menu-item index="1"><router-link to='/'>会议信息</router-link></el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1"><router-link to='/newhcp'>新建HCP</router-link></el-menu-item>
-        <el-menu-item index="2-2">已提交</el-menu-item>
-        <el-menu-item index="2-3">我的草稿</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
+    <div class="header">
+      <el-menu
+        default-active="1"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+        background-color="#29282E"
+        text-color="#2D82F0"
+        active-text-color="#2D82F0"
+      >
+        <el-submenu v-for="item in navList" :key="item.id" :index="item.id">
+          <template slot="title">{{ item.title }}</template>
+          <el-menu-item
+            v-for="item1 in item.navTo"
+            :key="item.id - item1.id"
+            :index="item.id + item1.id"
+          >
+            <router-link :to="item1.path">{{ item1.title }}</router-link>
+          </el-menu-item>
         </el-submenu>
-      </el-submenu>
-      <el-menu-item index="3">审批单</el-menu-item>
-    </el-menu>
-  </div>
+      </el-menu>
+    </div>
   </div>
 </template>
 <script>
+import { mapState,mapMutations } from "vuex";
 export default {
   name: "Header",
   data() {
@@ -36,17 +33,23 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+      const nowCurrent=keyPath[1].split('');
+      this.changeCurrentNav(nowCurrent)
+      console.log(nowCurrent);
     },
+    ...mapMutations(["changeCurrentNav"])
+  },
+  computed: {
+    ...mapState(["navList", "currentNav"]),
   },
 };
 </script>
 <style>
-.container_header{
-    background-color:#29282E;
+.container_header {
+  background-color: #29282e;
 }
-    .header{
-        width: 1280px;
-        margin: 0 auto;
-    }
+.header {
+  width: 1280px;
+  margin: 0 auto;
+}
 </style>

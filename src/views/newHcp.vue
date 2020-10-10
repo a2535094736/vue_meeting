@@ -1,11 +1,6 @@
 <template>
   <div class="container">
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }"
-        ><i class="el-icon-s-order breadcrumbcolor"></i>首页</el-breadcrumb-item
-      >
-      <el-breadcrumb-item>新建HCP</el-breadcrumb-item>
-    </el-breadcrumb>
+    <BreadCrumb></BreadCrumb>
     <div class="page">
       <div class="siderbar">
         <div class="sider_item">
@@ -17,7 +12,7 @@
           >会议名称：广州肿瘤会议 会议编号：EPG</el-row
         >
         <el-card shadow="never">
-          <div class="new_hcp_title_small"><span>HCP 基本信息</span><span>查看常用联系人</span></div>
+          <div class="new_hcp_title_small"><span>HCP 基本信息</span><span><el-button type='text' size='small'>查看常用联系人</el-button></span></div>
         </el-card>
       </div>
     </div>
@@ -25,7 +20,12 @@
 </template>
 
 <script>
-export default {};
+import BreadCrumb from '../components/breadCurmb'
+export default {
+  components:{
+    BreadCrumb,
+  }
+};
 </script>
 
 <style lang="less" scoped>
