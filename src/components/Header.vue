@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import { mapState,mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Header",
   data() {
@@ -33,18 +33,18 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      const nowCurrent=keyPath[1].split('');
-      this.changeCurrentNav(nowCurrent)
+      const nowCurrent = keyPath[1].split("");
+      this.changeCurrentNav(nowCurrent);
       console.log(nowCurrent);
     },
-    ...mapMutations(["changeCurrentNav"])
+    ...mapMutations(["changeCurrentNav"]),
   },
   computed: {
     ...mapState(["navList", "currentNav"]),
   },
 };
 </script>
-<style>
+<style lang="less">
 .container_header {
   background-color: #29282e;
 }

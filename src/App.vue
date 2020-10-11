@@ -4,6 +4,7 @@
     <div class="main">
         <router-view></router-view>
     </div>
+    
   </div>
       
 </template>

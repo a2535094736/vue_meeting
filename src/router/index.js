@@ -5,6 +5,7 @@ import Meetinginfoconfigure from '../views/meetingInfoConfig.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  {path:'/',redirect:'/meetinginfoconfigure'},
   {path:'/meetinginfoconfigure',component:Meetinginfoconfigure},
   {path:'/newhcp',component:NewHcp},
 ]
