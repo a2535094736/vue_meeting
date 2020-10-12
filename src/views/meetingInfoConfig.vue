@@ -2,16 +2,24 @@
   <div class="container">
     <BreadCrumb></BreadCrumb>
     <div class="page">
-      <div class="left_slider">
-        <div class="siderbar">
-          <div
-            v-for="(item, index) in siderItem"
-            :key="index"
-            class="sider_item"
-            :class="index == currentSider ? 'isActive' : ''"
-            @click="handelSlider(index)"
-          >
-            {{ item }}
+      <div class="left_all">
+        <div class="left_slider">
+          <div class="siderbar1">
+            <div
+              v-for="(item, index) in siderItem"
+              :key="index"
+              class="sider_item"
+              :class="index == currentSider ? 'isActive' : ''"
+              @click="handelSlider(index)"
+            >
+              {{ item }}
+            </div>
+          </div>
+          <div @click="FunbackTop" class="backup">
+            <i class="el-icon-caret-top"></i>
+          </div>
+          <div class="submit_all_btn">
+            <el-button type="primary" size="default">点击提交</el-button>
           </div>
         </div>
       </div>
@@ -173,7 +181,7 @@
               </el-row>
             </el-col>
           </el-row>
-          <div>
+          <div class="item_label">
             温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068
           </div>
         </el-card>
@@ -233,7 +241,7 @@
               </el-row>
             </el-col>
           </el-row>
-          <div>
+          <div class="item_label">
             温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068
           </div>
         </el-card>
@@ -393,12 +401,7 @@
         </el-card>
       </div>
     </div>
-    <div class="config_save_btn">
-          save
-    </div>
-    <div @click="FunbackTop" class="backup ">
-      <i class="el-icon-caret-top"></i>
-    </div>
+    <div class="config_save_btn">save</div>
   </div>
 </template>
 
@@ -447,43 +450,45 @@ export default {
       ],
     };
   },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
-  },
   methods: {
     handleScroll() {
       const scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      const nav = document.querySelector(".siderbar");
+      const left_slider = document.querySelector(".left_slider");
       const backup = document.querySelector(".backup");
       if (scrollTop > 80) {
-        nav.classList.add("fix_sider");
+        left_slider.classList.add("fix_sider");
         backup.classList.add("backup_show");
       } else {
-        nav.classList.remove("fix_sider");
+        left_slider.classList.remove("fix_sider");
         backup.classList.remove("backup_show");
       }
     },
     handelSlider(num) {
       this.currentSider = num;
     },
-    FunbackTop() {    //返回顶部
+    FunbackTop() {
+      //返回顶部
       var scrollToptimer = setInterval(function () {
-          var top = document.body.scrollTop || document.documentElement.scrollTop;
-          var speed = top / 6;
-          if (document.body.scrollTop!=0) {
-              document.body.scrollTop -= speed;
-          }else {
-              document.documentElement.scrollTop -= speed;
-          }
-          if (top == 0) {
-              clearInterval(scrollToptimer);
-          }
+        var top = document.body.scrollTop || document.documentElement.scrollTop;
+        var speed = top / 6;
+        if (document.body.scrollTop != 0) {
+          document.body.scrollTop -= speed;
+        } else {
+          document.documentElement.scrollTop -= speed;
+        }
+        if (top == 0) {
+          clearInterval(scrollToptimer);
+        }
       }, 20);
-    }
+    },
   },
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+
   components: {
     BreadCrumb,
   },
@@ -491,7 +496,7 @@ export default {
 </script>
 
 <style lang='less'>
-.config_save_btn{
+.config_save_btn {
   position: fixed;
   bottom: 50px;
   right: 40px;

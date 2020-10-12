@@ -14,7 +14,7 @@
           <template slot="title">{{ item.title }}</template>
           <el-menu-item
             v-for="item1 in item.navTo"
-            :key="item.id - item1.id"
+            :key="item.id + item1.id"
             :index="item.id + item1.id"
           >
             <router-link :to="item1.path">{{ item1.title }}</router-link>
@@ -35,7 +35,6 @@ export default {
     handleSelect(key, keyPath) {
       const nowCurrent = keyPath[1].split("");
       this.changeCurrentNav(nowCurrent);
-      console.log(nowCurrent);
     },
     ...mapMutations(["changeCurrentNav"]),
   },

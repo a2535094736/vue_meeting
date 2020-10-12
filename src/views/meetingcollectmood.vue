@@ -8,16 +8,9 @@
         </div>
       </div>
       <div class="mainer">
-        <el-row class="title">会议名称：广州肿瘤会议 会议编号：EPG</el-row>
+        <el-row class="title">自定义名单收集模版</el-row>
         <el-card shadow="never">
-          <div class="title_small">
-            <span>HCP 基本信息</span
-            ><span
-              ><el-button type="text" size="small"
-                >查看常用联系人</el-button
-              ></span
-            >
-          </div>
+          
         </el-card>
       </div>
     </div>
@@ -30,7 +23,7 @@ import Slider from "../components/Slider";
 export default {
   data() {
     return {
-      siderItem: "新建HCP",
+      siderItem: "自定义模版",
     };
   },
   components: {
@@ -40,5 +33,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style>
+
 </style>

@@ -3,12 +3,10 @@ body,
 #app {
   margin: 0;
   padding: 0;
+  color: #333333;
   background-color: #eeeeee;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-}
-body {
-  overflow-y: scroll;
 }
 .el-menu.el-menu--horizontal {
   border-bottom: solid 1px #29282e;
@@ -55,7 +53,7 @@ body {
       position: fixed;
       top: 20px;
     }
-    .siderbar {
+    .siderbar,.siderbar1 {
       width: 280px;
       z-index: 99;
       .sider_item {
@@ -74,10 +72,19 @@ body {
         background-color: #2d8cf0;
       }
     }
-    .left_slider {
+    .left_all {
       width: 280px;
       margin-right: 20px;
+      .left_slider {
+        font-size: 18px;
+        width: 280px;
+        .submit_all_btn {
+          text-align: center;
+          padding: 20px;
+        }
+      }
     }
+
     .mainer {
       width: 1200px;
       padding: 20px;
@@ -92,6 +99,8 @@ body {
       }
       .item_label {
         line-height: 40px;
+        font-size: 14px;
+        color: #333333;
       }
       .item_margin {
         margin-bottom: 20px;
@@ -127,6 +136,6 @@ body {
   line-height: 40px;
   color: #1989fa;
 }
-.backup_show{
+.backup_show {
   display: block;
 }
