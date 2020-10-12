@@ -10,7 +10,10 @@
       <div class="mainer">
         <el-row class="title">自定义名单收集模版</el-row>
         <el-card shadow="never">
-          
+          <div class="title_small">
+            <span>HCP 基本信息(必填）</span
+            >
+          </div>
         </el-card>
       </div>
     </div>
@@ -34,5 +37,4 @@ export default {
 </script>
 
 <style>
-
 </style>
