@@ -137,6 +137,13 @@ body,
   font-size: 14px;
   color: #333333;
 }
+.container .page .mainer .item_label .necessary_signal {
+  color: #F22B0D;
+  font-size: 20px;
+  position: relative;
+  top: 6px;
+  left: 8px;
+}
 .container .page .mainer .item_margin {
   margin-bottom: 20px;
 }
