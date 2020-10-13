@@ -3,7 +3,6 @@
     <div class="header">
       <el-menu
         default-active="1"
-        class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
         background-color="#29282E"

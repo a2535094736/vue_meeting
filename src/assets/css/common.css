@@ -33,6 +33,9 @@ body,
 .el-card {
   margin-bottom: 20px;
 }
+.el-progress {
+  width: 180px;
+}
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 100%;
@@ -101,6 +104,33 @@ body,
   font-weight: 500;
   color: #2d8cf0;
   margin-bottom: 20px;
+}
+.container .page .mainer .marginb20 {
+  margin-bottom: 20px;
+}
+.container .page .mainer .approvelItem {
+  position: relative;
+}
+.container .page .mainer .approvelItem p {
+  margin: 0px;
+  margin-bottom: 10px;
+}
+.container .page .mainer .approvelItem .includeRate {
+  display: flex;
+  justify-content: space-between;
+}
+.container .page .mainer .approvelItem .includeRate .ratePercent {
+  display: flex;
+  justify-content: space-between;
+}
+.container .page .mainer .approvelItem .includeRate .ratePercent .el-progress {
+  top: -5px;
+}
+.container .page .mainer .approvelItem .approvelGoDetail {
+  position: absolute;
+  padding: 10px 30px;
+  right: 20px;
+  bottom: 30px;
 }
 .container .page .mainer .item_label {
   line-height: 40px;

@@ -26,7 +26,7 @@
       <div class="mainer">
         <el-row class="title">会议信息详情</el-row>
         <el-card shadow="never">
-          <div class="title_small"><span>会议基本信息</span></div>
+          <div class="title_small slider_nav1"><span>会议基本信息</span></div>
           <el-row :gutter="20">
             <el-col class="item_margin" :span="12">
               <el-row :gutter="20">
@@ -132,7 +132,7 @@
           </el-row>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small"><span>大交通管控设置(出票）</span></div>
+          <div class="title_small slider_nav2"><span>大交通管控设置(出票）</span></div>
           <div class="title_small"><span>机票类设置：舱等设置</span></div>
           <el-row :gutter="20">
             <el-col class="item_margin" :span="24">
@@ -186,7 +186,7 @@
           </div>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small"><span>大交通控制设置(改期）</span></div>
+          <div class="title_small slider_nav3"><span>大交通控制设置(改期）</span></div>
           <el-row :gutter="20">
             <el-col class="item_margin" :span="12">
               <el-row :gutter="20">
@@ -246,7 +246,7 @@
           </div>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small">
+          <div class="title_small slider_nav4">
             <span>会议审批设置</span
             ><span
               ><el-button type="text" size="small"
@@ -458,12 +458,21 @@ export default {
         document.body.scrollTop;
       const left_slider = document.querySelector(".left_slider");
       const backup = document.querySelector(".backup");
+      const slider_nav2 = document.querySelector(".slider_nav2").offsetTop;
+      const slider_nav3 = document.querySelector(".slider_nav3").offsetTop;
       if (scrollTop > 80) {
         left_slider.classList.add("fix_sider");
         backup.classList.add("backup_show");
+        if (scrollTop > slider_nav2) {
+          this.currentSider = 1;
+          if ( scrollTop > slider_nav3) {
+            this.currentSider = 2;
+          }
+        }
       } else {
         left_slider.classList.remove("fix_sider");
         backup.classList.remove("backup_show");
+        this.currentSider = 0;
       }
     },
     handelSlider(num) {
@@ -487,6 +496,9 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+     window.removeEventListener("scroll", this.handleScroll);
   },
 
   components: {

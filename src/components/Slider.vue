@@ -38,12 +38,11 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
   methods: {
     handleScroll() {
-      const currentPath=this.$route.path;
-      if(currentPath == '/meetinginfoconfigure'){
-          return;
-      }
       const scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||

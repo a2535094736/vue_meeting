@@ -34,6 +34,9 @@ body,
 .el-card {
   margin-bottom: 20px;
 }
+.el-progress {
+  width: 180px;
+}
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 100%;
@@ -96,6 +99,33 @@ body,
         font-weight: 500;
         color: #2d8cf0;
         margin-bottom: 20px;
+      }
+      .marginb20{
+        margin-bottom: 20px;
+      }
+      .approvelItem{
+        position: relative;
+        p{
+          margin:0px;
+          margin-bottom: 10px;
+        }
+        .includeRate{
+          display: flex;
+          justify-content: space-between;
+          .ratePercent{
+            display: flex;
+            justify-content: space-between;
+            .el-progress{
+              top: -5px;
+            }
+          }
+        }
+        .approvelGoDetail{
+          position: absolute;
+          padding:10px 30px;
+          right: 20px;
+          bottom: 30px;
+        }
       }
       .item_label {
         line-height: 40px;

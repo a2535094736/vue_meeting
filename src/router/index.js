@@ -4,6 +4,7 @@ import NewHcp from '../views/newHcp.vue'
 import Meetinginfoconfigure from '../views/meetingInfoConfig.vue'
 import MeetingCollectHome from '../views/listFormat'
 import MeetingCollectMood from '../views/meetingcollectmood'
+import ApprovelList from '../views/approvelList'
 Vue.use(VueRouter)
 
 const routes = [
@@ -12,6 +13,7 @@ const routes = [
   {path:'/meetingcollecthome',component:MeetingCollectHome},
   {path:'/meetingcollectmood',component:MeetingCollectMood},
   {path:'/newhcp',component:NewHcp},
+  {path:'/approvellist',component:ApprovelList},
 ]
 
 const router = new VueRouter({
