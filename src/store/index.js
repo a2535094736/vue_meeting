@@ -22,7 +22,7 @@ export default new Vuex.Store({
       },
       {
         id: "2",
-        title: "我的工作台",
+        title: "名单收集",
         navTo: [
           { id: "1", title: "新建HCP", path: "/newhcp" },
           { id: "2", title: "已提交", path: "/hassubmit" },

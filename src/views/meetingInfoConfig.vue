@@ -80,7 +80,7 @@
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column type="index" width="80">
               <template slot="header">
-                <p>序号</p>
+                序号
               </template>
             </el-table-column>
             <el-table-column prop="date" label="会议关键人角色">
@@ -98,7 +98,7 @@
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column type="index" width="80">
               <template slot="header">
-                <p>序号</p>
+                序号
               </template>
             </el-table-column>
             <el-table-column prop="date" label="报价金额"> </el-table-column>

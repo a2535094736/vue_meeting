@@ -18,7 +18,7 @@
               ></span
             >
           </div>
-          <InputArea :hcpInfo='hcpInfo' :isNecessarySignal='true'></InputArea>
+          <InputArea :hcpInfo="hcpInfo" :isNecessarySignal="true"></InputArea>
         </el-card>
       </div>
     </div>
@@ -39,7 +39,7 @@ export default {
           enTitle: "UCI CODE",
           znTitle: "UCI CODE",
           input: "",
-          isnecessary: 'necessary',
+          isnecessary: "necessary",
           type: "input",
         },
         { enTitle: "name", znTitle: "姓名", input: "", type: "input" },
@@ -49,24 +49,63 @@ export default {
           input: "",
           type: "input",
         },
-        { enTitle: "gender", znTitle: "性别", input: "", type: "input" },
+        {
+          enTitle: "gender",
+          znTitle: "性别",
+          input: "",
+          type: "select",
+          options: [
+            {
+              value: "男",
+              label: "男",
+            },
+            {
+              value: "女",
+              label: "女",
+            },
+          ],
+        },
         { enTitle: "city", znTitle: "所在城市", input: "", type: "input" },
         { enTitle: "mobile", znTitle: "手机号", input: "", type: "input" },
         { enTitle: "hostipal", znTitle: "所在医院", input: "", type: "input" },
-        { enTitle: "idNum", znTitle: "证件号", input: "", type: "input" },
+        {
+          enTitle: "licenceType",
+          znTitle: "证件类型",
+          input: "",
+          type: "select",
+          options: [
+            {
+              value: "身份证",
+              label: "身份证",
+            },
+            {
+              value: "护照",
+              label: "护照",
+            },
+            {
+              value: "军官证",
+              label: "军官证",
+            },
+          ],
+        },
         {
           enTitle: "department",
           znTitle: "所在科室",
           input: "",
           type: "input",
         },
-        {
-          enTitle: "licenceType",
-          znTitle: "证件类型",
-          input: "",
-          type: "input",
-        },
+        { enTitle: "idNum", znTitle: "证件号", input: "", type: "input" },
         { enTitle: "title", znTitle: "职务", input: "", type: "input" },
+        {
+          enTitle: "title",
+          znTitle: "select",
+          input: "",
+          type: "radio",
+          radio: [
+            {value: "是"},
+            {value: "否"},
+          ],
+        },
       ],
     };
   },

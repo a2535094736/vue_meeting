@@ -8,10 +8,16 @@
     >
       <el-row v-if="item.isnecessary" :gutter="20">
         <el-col :span="4" class="item_label"
-          >{{item.znTitle}}<span v-if="isNecessarySignal" class="necessary_signal">*</span></el-col
+          >{{ item.znTitle
+          }}<span v-if="isNecessarySignal" class="necessary_signal"
+            >*</span
+          ></el-col
         >
         <el-col :span="8"
-          ><el-input v-model="item.input" :placeholder="'请输入' + item.znTitle"></el-input
+          ><el-input
+            v-model="item.input"
+            :placeholder="'请输入' + item.znTitle"
+          ></el-input
         ></el-col>
         <el-col class="alert_icon" :span="1">
           <el-popover
@@ -27,14 +33,36 @@
       <el-row v-else :gutter="20">
         <el-col :span="8" class="item_label"
           >{{ "HCP" + item.znTitle
-          }}<span v-if="isNecessarySignal" class="necessary_signal">*</span></el-col
+          }}<span v-if="isNecessarySignal" class="necessary_signal"
+            >*</span
+          ></el-col
         >
-        <el-col v-if="item.type=='input'" :span="16"
-          ><el-input 
+        <el-col v-if="item.type == 'input'" :span="16"
+          ><el-input
             v-model="item.input"
             :placeholder="'请输入' + item.znTitle"
           ></el-input
         ></el-col>
+        <el-col v-if="item.type == 'select'" :span="16"
+          ><el-select v-model="item.input" placeholder="请选择">
+            <el-option
+              v-for="item1 in item.options"
+              :key="item1.value"
+              :label="item1.label"
+              :value="item1.value"
+            >
+            </el-option> </el-select
+        ></el-col>
+        <el-col v-if="item.type == 'radio'" :span="16"
+          ><el-radio-group class="radio_frame" v-model="item.input">
+            <el-radio
+              v-for="(item1, index1) in item.radio"
+              :key="item1 + index1"
+              :label="item1.value"
+              >{{item1.value}}</el-radio
+            >
+          </el-radio-group></el-col
+        >
       </el-row>
     </el-col>
   </el-row>
