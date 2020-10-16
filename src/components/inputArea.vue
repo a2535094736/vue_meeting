@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20">
     <el-col
-      v-for="item in hcpInfo"
+      v-for="item in inputInfo"
       :key="item.znTitle"
       class="item_margin"
       :span="item.isnecessary == 'necessary' ? 24 : 12"
@@ -71,7 +71,7 @@
 <script>
 export default {
   props: {
-    hcpInfo: {
+    inputInfo: {
       type: Array,
       default: [],
     },

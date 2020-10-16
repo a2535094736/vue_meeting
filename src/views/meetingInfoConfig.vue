@@ -27,31 +27,7 @@
         <el-row class="title">会议信息详情</el-row>
         <el-card shadow="never">
           <div class="title_small slider_nav1"><span>会议基本信息</span></div>
-          <el-row :gutter="20">
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">会议ID号</el-col>
-                <el-col :span="16"
-                  ><el-input v-model="input" placeholder="请输入内容"></el-input
-                ></el-col>
-              </el-row>
-            </el-col>
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">会议状态</el-col>
-                <el-col :span="16"
-                  ><el-select v-model="value" placeholder="请选择">
-                    <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option> </el-select
-                ></el-col>
-              </el-row>
-            </el-col>
-          </el-row>
+          <InputArea :inputInfo="meetingBaseInfo"></InputArea>
           <div class="title_small"><span>会议关键人</span></div>
           <el-row :gutter="20">
             <el-col class="item_margin" :span="12">
@@ -79,9 +55,7 @@
           </el-row>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column type="index" width="80">
-              <template slot="header">
-                序号
-              </template>
+              <template slot="header"> 序号 </template>
             </el-table-column>
             <el-table-column prop="date" label="会议关键人角色">
             </el-table-column>
@@ -97,9 +71,7 @@
           <div class="title_small"><span>会议报价</span></div>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column type="index" width="80">
-              <template slot="header">
-                序号
-              </template>
+              <template slot="header"> 序号 </template>
             </el-table-column>
             <el-table-column prop="date" label="报价金额"> </el-table-column>
             <el-table-column prop="name" label="百分比"> </el-table-column>
@@ -132,7 +104,9 @@
           </el-row>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small slider_nav2"><span>大交通管控设置(出票）</span></div>
+          <div class="title_small slider_nav2">
+            <span>大交通管控设置(出票）</span>
+          </div>
           <div class="title_small"><span>机票类设置：舱等设置</span></div>
           <el-row :gutter="20">
             <el-col class="item_margin" :span="24">
@@ -186,7 +160,9 @@
           </div>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small slider_nav3"><span>大交通控制设置(改期）</span></div>
+          <div class="title_small slider_nav3">
+            <span>大交通控制设置(改期）</span>
+          </div>
           <el-row :gutter="20">
             <el-col class="item_margin" :span="12">
               <el-row :gutter="20">
@@ -407,6 +383,7 @@
 
 <script>
 import BreadCrumb from "../components/breadCurmb";
+import InputArea from "../components/inputArea";
 export default {
   data() {
     return {
@@ -417,7 +394,8 @@ export default {
       travelNeedApprovel: "需要",
       reissueApprovel: "需要",
       listApprovel: "",
-      currentSider: 0,
+      currentSider: 0, // 当前sliderItem所在位置
+      // 页面侧边栏数据
       siderItem: [
         "会议基本信息",
         "大交通控制设置",
@@ -426,6 +404,7 @@ export default {
         "其他信息收集",
         "已收集名单下载",
       ],
+      // 模拟表格数据
       tableData: [
         {
           data: "1",
@@ -448,10 +427,85 @@ export default {
           label: "进行中",
         },
       ],
+      // 会议基本信息数据
+      meetingBaseInfo: [
+        {
+          enTitle: "meetingNum", // inputLable的英文
+          znTitle: "会议ID号", // inputLable的中文
+          input: "", // 输入框的值
+          type: "input", // 输入框的类型
+        },
+        {
+          enTitle: "meetingPlace",
+          znTitle: "会议地点",
+          input: "",
+          type: "input",
+        },
+        {
+          enTitle: "meetingStatus",
+          znTitle: "会议状态",
+          input: "",
+          type: "select",
+          options: [
+            {
+              value: "正常",
+              label: "正常",
+            },
+            {
+              value: "暂停",
+              label: "暂停",
+            },
+          ],
+        },
+        {
+          enTitle: "meetingSubstance",
+          znTitle: "会议性质",
+          input: "",
+          type: "select",
+          options: [
+            {
+              value: "正常",
+              label: "正常",
+            },
+            {
+              value: "暂停",
+              label: "暂停",
+            },
+          ],
+        },
+        {
+          enTitle: "meetingName",
+          znTitle: "会议姓名",
+          input: "",
+          type: "input",
+        },
+        {
+          enTitle: "meetingDescription",
+          znTitle: "会议描述",
+          input: "",
+          type: "input",
+        },
+        {
+          enTitle: "meetingStartDate",
+          znTitle: "会议开始日期",
+          input: "",
+          type: "input",
+        },
+        {
+          enTitle: "meetingEndDate",
+          znTitle: "会议结束日期",
+          input: "",
+          type: "input",
+        },
+      ],
+      // 以上
     };
   },
   methods: {
     handleScroll() {
+      /**
+       * @param { Number } scrollTop //当前页面上卷高度
+       */
       const scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
@@ -465,7 +519,7 @@ export default {
         backup.classList.add("backup_show");
         if (scrollTop > slider_nav2) {
           this.currentSider = 1;
-          if ( scrollTop > slider_nav3) {
+          if (scrollTop > slider_nav3) {
             this.currentSider = 2;
           }
         }
@@ -476,6 +530,10 @@ export default {
       }
     },
     handelSlider(num) {
+      /**
+       * @param { Number } num //当前侧边栏的index值
+       * @return void
+       */
       this.currentSider = num;
     },
     FunbackTop() {
@@ -498,11 +556,12 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
-     window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   },
 
   components: {
     BreadCrumb,
+    InputArea,
   },
 };
 </script>
