@@ -40,7 +40,28 @@ export default {
   data() {
     return {
       siderItem: "审批列表",
-      queryItem: ["会议名称", "会议编号", "会议开始日期", "会议结束日期"],
+      queryItem:[
+        {
+          title: "会议名称",
+          input: "",
+          type: "input",
+        },
+        {
+          title: "会议编号",
+          input: "",
+          type: "input",
+        },
+        {
+          title: "会议开始日期",
+          input: "",
+          type: "input",
+        },
+        {
+          title: "会议结束日期",
+          input: "",
+          type: "input",
+        },
+      ],
       approvelStatus: "参会名单收集中",
       approvelDataList: [
         {

@@ -25,7 +25,7 @@ export default new Vuex.Store({
         title: "名单收集",
         navTo: [
           { id: "1", title: "新建HCP", path: "/newhcp" },
-          { id: "2", title: "已提交", path: "/hassubmit" },
+          { id: "2", title: "已提交", path: "/submitlist" },
           { id: "3", title: "草稿箱", path: "/sketch" },
         ],
       },
@@ -33,9 +33,9 @@ export default new Vuex.Store({
         id: "3",
         title: "审批单",
         navTo: [
-          { id: "1", title: "审批列表", path: "/approvellist" },
-          { id: "2", title: "审批单明细", path: "/approveldetail" },
-          { id: "3", title: "已结束会议", path: "/finishedmeeting" },
+          { id: "1", title: "审批列表", path: "/approvallist" },
+          { id: "2", title: "审批单明细", path: "/approvaldetail" },
+          { id: "3", title: "已结束会议", path: "/approvalfreelist" },
         ],
       },
     ]

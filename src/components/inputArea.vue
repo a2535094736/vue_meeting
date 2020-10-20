@@ -32,7 +32,7 @@
       </el-row>
       <el-row v-else :gutter="20">
         <el-col :span="8" class="item_label"
-          >{{ "HCP" + item.znTitle
+          >{{item.znTitle
           }}<span v-if="isNecessarySignal" class="necessary_signal"
             >*</span
           ></el-col
