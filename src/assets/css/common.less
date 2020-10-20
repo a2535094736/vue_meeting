@@ -62,7 +62,8 @@ body,
       position: fixed;
       top: 20px;
     }
-    .siderbar,.siderbar1 {
+    .siderbar,
+    .siderbar1 {
       width: 280px;
       z-index: 99;
       .sider_item {
@@ -107,44 +108,54 @@ body,
         color: #2d8cf0;
         margin-bottom: 20px;
       }
-      
-      .marginb20{
+
+      .marginb20 {
         margin-bottom: 20px;
       }
-      .approvelItem{
+      .approvelItem {
         position: relative;
-        p{
-          margin:0px;
+        p {
+          font-size: 14px;
+          margin: 0px;
           margin-bottom: 10px;
         }
-        .includeRate{
+        .includeRate {
           display: flex;
           justify-content: space-between;
-          .ratePercent{
+          .ratePercent {
             display: flex;
             justify-content: space-between;
-            .el-progress{
+            .el-progress {
               top: -5px;
             }
           }
         }
-        .approvelGoDetail{
+        .approvelGoDetail {
           position: absolute;
-          padding:10px 30px;
+          padding: 10px 30px;
           right: 20px;
           bottom: 30px;
+        }
+      }
+      .approvelItem1 {
+        .el-card__body{
+          display: flex;
+          .approvelItemCheck{
+            width: 20px;
+          }
+
         }
       }
       .item_label {
         line-height: 40px;
         font-size: 14px;
         color: #333333;
-        .necessary_signal{
-          color: #F22B0D;
+        .necessary_signal {
+          color: #f22b0d;
           font-size: 20px;
           position: relative;
           top: 6px;
-    left: 8px;
+          left: 8px;
         }
       }
       .item_margin {
@@ -185,9 +196,9 @@ body,
   display: block;
 }
 
-.submitArea{
+.submitArea {
   text-align: right;
-  .submitArea_row{
+  .submitArea_row {
     margin-top: 15px;
   }
 }

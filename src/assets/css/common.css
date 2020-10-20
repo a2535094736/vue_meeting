@@ -119,6 +119,7 @@ body,
   position: relative;
 }
 .container .page .mainer .approvelItem p {
+  font-size: 14px;
   margin: 0px;
   margin-bottom: 10px;
 }
@@ -139,13 +140,19 @@ body,
   right: 20px;
   bottom: 30px;
 }
+.container .page .mainer .approvelItem1 .el-card__body {
+  display: flex;
+}
+.container .page .mainer .approvelItem1 .el-card__body .approvelItemCheck {
+  width: 20px;
+}
 .container .page .mainer .item_label {
   line-height: 40px;
   font-size: 14px;
   color: #333333;
 }
 .container .page .mainer .item_label .necessary_signal {
-  color: #F22B0D;
+  color: #f22b0d;
   font-size: 20px;
   position: relative;
   top: 6px;
