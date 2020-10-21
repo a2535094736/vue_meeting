@@ -54,12 +54,12 @@ export default {
         {
           title: "会议开始日期",
           input: "",
-          type: "input",
+          type: "date",
         },
         {
           title: "会议结束日期",
           input: "",
-          type: "input",
+          type: "date",
         },
       ],
       approvelStatus: "参会名单收集中",

@@ -106,12 +106,12 @@ export default {
         {
           title: "输入行程开始日期",
           input: "",
-          type: "input",
+          type: "date",
         },
         {
           title: "输入行程结束日期",
           input: "",
-          type: "input",
+          type: "date",
         },
       ],
       customColors: [
@@ -147,12 +147,12 @@ export default {
       if (this.checkAll) {
         this.orderInfo.map((item) => {
           item.isCheckd = true;
-           this.isIndeterminate =false;
+          this.isIndeterminate = false;
         });
       } else {
         this.orderInfo.map((item) => {
           item.isCheckd = false;
-          this.isIndeterminate =false;
+          this.isIndeterminate = false;
         });
       }
     },
@@ -160,12 +160,13 @@ export default {
       const checkList = [];
       let orderLength = this.orderInfo.length;
       this.orderInfo.map((item) => {
-        if(item.isCheckd){
-          checkList.push(item)
+        if (item.isCheckd) {
+          checkList.push(item);
         }
       });
       this.checkAll = checkList.length == orderLength;
-      this.isIndeterminate = checkList.length >0 && checkList.length<orderLength;
+      this.isIndeterminate =
+        checkList.length > 0 && checkList.length < orderLength;
     },
   },
   components: {

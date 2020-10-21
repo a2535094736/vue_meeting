@@ -57,7 +57,21 @@ export default {
         {
           title: "待审批",
           input: "",
-          type: "input",
+          type: "select",
+          select:[
+            {
+              value:'待审批',
+              label:'待审批',
+            },
+            {
+              value:'已审批',
+              label:'已审批',
+            },
+            {
+              value:'已拒绝',
+              label:'已拒绝',
+            },
+          ]
         },
       ],
       tableData: [

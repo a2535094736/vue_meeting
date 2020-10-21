@@ -43,11 +43,13 @@
           <div class="title_small">
             <span>添加自定义填写项</span>
           </div>
+          <!-- 用户点击添加自定义选项按钮 -->
           <div class="user_free_area">
             <div
               v-for="item in userDefined"
-              :key="item.title"
+              :key="item.id"
               class="user_free_item"
+              @click="handleToHasChoose(item.id)"
             >
               <div class="user_free_item_text">{{ item.title }}</div>
               <div class="user_free_item_img">
@@ -65,16 +67,28 @@
               ></span
             >
           </div>
-          <el-row v-for="item in hasChooseUserDefined" :key="item.id" :gutter="20">
-            <el-col class="item_label" :span="4">{{item.title+'：'}}</el-col>
+          <el-row
+            v-for="item in hasChooseUserDefined"
+            :key="item.id"
+            :gutter="20"
+          >
+            <el-col class="item_label" :span="5">{{
+              item.title + "："
+            }}</el-col>
             <el-col class="item_margin" :span="8"
               ><el-input v-model="item.input"></el-input
             ></el-col>
-            <el-col style="line-height:40px" :span="1"
+            <el-col style="line-height: 40px" :span="1"
               ><el-checkbox v-model="item.isnecessary"></el-checkbox
             ></el-col>
             <el-col :span="2"
-              ><el-button type="danger" size="medium" plain>删除</el-button></el-col
+              ><el-button
+                type="danger"
+                size="medium"
+                plain
+                @click="deleteUserDefine(item.id)"
+                >删除</el-button
+              ></el-col
             >
           </el-row>
         </el-card>
@@ -102,18 +116,19 @@ export default {
       siderItem: "自定义模版",
       necessaryMode: true,
       userDefined: [
-        {id:1, title: "所属销售区域", isnecessary: false, input: "" },
-        {id:2, title: "STAFF火车票 是否接受二等座", isnecessary: false, input: "" },
-        {id:3, title: "STAFF是否 参加晚宴会", isnecessary: false, input: "" },
-        {id:4, title: "HCP是否参会", isnecessary: false, input: "" },
-        {id:5, title: "HCP是否 需要陪同", isnecessary: false, input: "" },
-        {id:6, title: "HCP是否 参加晚宴会", isnecessary: false, input: "" },
+        { id: 1, title: "所属销售区域", isnecessary: false, input: "" },
+        {
+          id: 2,
+          title: "STAFF火车票 是否接受二等座",
+          isnecessary: false,
+          input: "",
+        },
+        { id: 3, title: "STAFF是否 参加晚宴会", isnecessary: false, input: "" },
+        { id: 4, title: "HCP是否参会", isnecessary: false, input: "" },
+        { id: 5, title: "HCP是否 需要陪同", isnecessary: false, input: "" },
+        { id: 6, title: "HCP是否 参加晚宴会", isnecessary: false, input: "" },
       ],
-      hasChooseUserDefined:[
-        {id:1, title: "所属销售区域", isnecessary: false, type:'input', input: "" },
-        {id:2, title: "所属销售区域", isnecessary: false, type:'input', input: "" },
-        {id:3, title: "所属销售区域", isnecessary: false, type:'input', input: "" },
-      ],
+      hasChooseUserDefined: [],
       hcpInfo: [
         {
           enTitle: "HCP UCI CODE",
@@ -304,6 +319,25 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    handleToHasChoose(id) {
+      this.userDefined.map((item, index) => {
+        if (item.id == id) {
+          this.userDefined.splice(index, 1);
+          this.hasChooseUserDefined.push(item);
+        }
+      });
+    },
+    deleteUserDefine(id) {
+      this.hasChooseUserDefined.map((item, index) => {
+        if (item.id == id) {
+          item.isnecessary = false;
+          this.hasChooseUserDefined.splice(index, 1);
+          this.userDefined.push(item);
+        }
+      });
+    },
   },
   components: {
     BreadCrumb,
