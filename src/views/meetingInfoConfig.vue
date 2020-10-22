@@ -15,7 +15,7 @@
               {{ item }}
             </div>
           </div>
-          <div @click="FunbackTop" class="backup">
+          <div @click="Funback(0, 200)" class="backup">
             <i class="el-icon-caret-top"></i>
           </div>
           <div class="submit_all_btn">
@@ -26,33 +26,10 @@
       <div class="mainer">
         <el-row class="title">会议信息详情</el-row>
         <el-card shadow="never">
-          <div class="title_small slider_nav1"><span>会议基本信息</span></div>
+          <div class="title_small slider_nav0"><span>会议基本信息</span></div>
           <InputArea :inputInfo="meetingBaseInfo"></InputArea>
           <div class="title_small"><span>会议关键人</span></div>
-          <el-row :gutter="20">
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">会议组织部门</el-col>
-                <el-col :span="16"
-                  ><el-input v-model="input" placeholder="请输入内容"></el-input
-                ></el-col>
-              </el-row>
-            </el-col>
-            <el-col class="item_margin" :span="24">
-              <el-row :gutter="20">
-                <el-col :span="4" class="item_label">行程安排</el-col>
-                <el-col :span="20"
-                  ><el-input
-                    type="textarea"
-                    :rows="3"
-                    placeholder="请输入内容"
-                    v-model="textarea"
-                  >
-                  </el-input
-                ></el-col>
-              </el-row>
-            </el-col>
-          </el-row>
+          <InputArea :inputInfo="meetingKeyManInfo"></InputArea>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column type="index" width="80">
               <template slot="header"> 序号 </template>
@@ -79,144 +56,25 @@
             <el-table-column prop="address" label="GL ACCT"> </el-table-column>
             <el-table-column prop="address" label="WBS Code"> </el-table-column>
           </el-table>
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">大交通报价百分比</el-col>
-                <el-col :span="16"
-                  ><el-input
-                    v-model="input"
-                    placeholder="请输入百分比"
-                  ></el-input
-                ></el-col>
-              </el-row>
-            </el-col>
-            <el-col class="alert_icon" :span="1">
-              <el-popover
-                placement="top-start"
-                width="200"
-                trigger="hover"
-                content="输入大交通占总预算的最高比例"
-              >
-                <i class="el-icon-warning" slot="reference"></i>
-              </el-popover>
-            </el-col>
-          </el-row>
+          <InputArea :inputInfo="meetingBudget.warningRate"></InputArea>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small slider_nav2">
+          <div class="title_small slider_nav1">
             <span>大交通管控设置(出票）</span>
           </div>
           <div class="title_small"><span>机票类设置：舱等设置</span></div>
-          <el-row :gutter="20">
-            <el-col class="item_margin" :span="24">
-              <el-row :gutter="20">
-                <el-col :span="4" class="item_label">最高折扣率</el-col>
-                <el-col :span="8"
-                  ><el-input
-                    v-model="input"
-                    placeholder="请输入最高折扣率"
-                  ></el-input
-                ></el-col>
-                <el-col class="alert_icon" :span="1">
-                  <el-popover
-                    placement="top-start"
-                    width="200"
-                    trigger="hover"
-                    content="机票最高折扣率"
-                  >
-                    <i class="el-icon-warning" slot="reference"></i>
-                  </el-popover>
-                </el-col>
-              </el-row>
-            </el-col>
-          </el-row>
-          <div class="title_small"><span>机票类设置：舱等设置</span></div>
-          <el-row :gutter="20">
-            <el-col class="item_margin" :span="24">
-              <el-row :gutter="20">
-                <el-col :span="4" class="item_label">最高折扣率</el-col>
-                <el-col :span="8"
-                  ><el-input
-                    v-model="input"
-                    placeholder="请输入最高折扣率"
-                  ></el-input
-                ></el-col>
-                <el-col class="alert_icon" :span="1">
-                  <el-popover
-                    placement="top-start"
-                    width="200"
-                    trigger="hover"
-                    content="机票最高折扣率"
-                  >
-                    <i class="el-icon-warning" slot="reference"></i>
-                  </el-popover>
-                </el-col>
-              </el-row>
-            </el-col>
-          </el-row>
+          <InputArea :inputInfo="BTControl.maxRate"></InputArea>
           <div class="item_label">
             温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068
           </div>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small slider_nav3">
+          <div class="title_small slider_nav2">
             <span>大交通控制设置(改期）</span>
           </div>
-          <el-row :gutter="20">
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">大交通政策启用日期</el-col>
-                <el-col :span="16"
-                  ><el-date-picker
-                    v-model="travelStartDate"
-                    type="date"
-                    placeholder="选择日期"
-                  >
-                  </el-date-picker
-                ></el-col>
-              </el-row>
-            </el-col>
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">大交通政策结束日期</el-col>
-                <el-col :span="16"
-                  ><el-date-picker
-                    v-model="travelStartDate"
-                    type="date"
-                    placeholder="选择日期"
-                  >
-                  </el-date-picker
-                ></el-col>
-              </el-row>
-            </el-col>
-          </el-row>
+          <InputArea :inputInfo="BTControl.changeDate"></InputArea>
           <div class="title_small"><span>机票类设置：舱等设置</span></div>
-          <el-row :gutter="20">
-            <el-col class="item_margin" :span="24">
-              <el-row :gutter="20">
-                <el-col :span="4" class="item_label"
-                  >允许更改的最高折扣率</el-col
-                >
-                <el-col :span="8"
-                  ><el-input
-                    v-model="input"
-                    placeholder="请输入最高折扣率"
-                  ></el-input
-                ></el-col>
-                <el-col class="alert_icon" :span="1">
-                  <el-popover
-                    placement="top-start"
-                    width="200"
-                    trigger="hover"
-                    content="机票最高折扣率"
-                  >
-                    <i class="el-icon-warning" slot="reference"></i>
-                  </el-popover>
-                </el-col>
-              </el-row>
-            </el-col>
-          </el-row>
+          <InputArea :inputInfo="BTControl.changeMaxRate"></InputArea>
           <div class="item_label">
             温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068
           </div>
@@ -230,70 +88,19 @@
               ></span
             >
           </div>
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">大交通是否需要审批</el-col>
-                <el-col :span="16"
-                  ><el-radio-group v-model="travelNeedApprovel">
-                    <el-radio-button label="需要"></el-radio-button>
-                    <el-radio-button
-                      label="不需要"
-                    ></el-radio-button> </el-radio-group
-                ></el-col>
-              </el-row>
-            </el-col>
-            <el-col :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">退改签免批</el-col>
-                <el-col :span="16"
-                  ><el-radio-group v-model="reissueApprovel">
-                    <el-radio-button label="需要"></el-radio-button>
-                    <el-radio-button
-                      label="不需要"
-                    ></el-radio-button> </el-radio-group
-                ></el-col>
-              </el-row>
-            </el-col>
-          </el-row>
-          <el-row v-if="travelNeedApprovel == '需要'">
-            <el-col :span="24">
-              <el-row :gutter="20">
-                <el-col :span="4" class="item_label">预录入名单免批</el-col>
-                <el-col :span="8">
-                  <el-radio-group class="radio_frame" v-model="listApprovel">
-                    <el-radio :label="3">是</el-radio>
-                    <el-radio :label="6">否</el-radio>
-                  </el-radio-group>
-                </el-col>
-              </el-row>
-            </el-col>
-            <el-col :span="24">
-              <el-row :gutter="20">
-                <el-col :span="4" class="item_label">后续名单免批</el-col>
-                <el-col :span="8">
-                  <el-radio-group class="radio_frame" v-model="listApprovel">
-                    <el-radio :label="3">是</el-radio>
-                    <el-radio :label="6">否</el-radio>
-                  </el-radio-group>
-                </el-col>
-              </el-row>
-            </el-col>
-            <el-col :span="24">
-              <el-row :gutter="20">
-                <el-col :span="4" class="item_label">内部员工免批</el-col>
-                <el-col :span="8">
-                  <el-radio-group class="radio_frame" v-model="listApprovel">
-                    <el-radio :label="3">是</el-radio>
-                    <el-radio :label="6">否</el-radio>
-                  </el-radio-group>
-                </el-col>
-              </el-row>
-            </el-col>
-          </el-row>
+          <InputArea
+            :inputInfo="meetApprovalConfig"
+            :isNeedApproval="meetApprovalConfig[0].value !== '需要'"
+          ></InputArea>
+          <InputArea
+            :inputInfo="meetApprovalConfig[0].isNeedApproval"
+            :isNeedApproval="meetApprovalConfig[0].value !== '需要'"
+          ></InputArea>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small"><span>名单收集设置(收集日期）</span></div>
+          <div class="title_small slider_nav3">
+            <span>名单收集设置(收集日期）</span>
+          </div>
           <el-row :gutter="20">
             <el-col class="item_margin" :span="12">
               <el-row :gutter="20">
@@ -312,14 +119,18 @@
               <el-row :gutter="20">
                 <el-col :span="8" class="item_label">名单收集N天提醒</el-col>
                 <el-col :span="8"
-                  ><el-input v-model="input" placeholder="请输入内容"></el-input
+                  ><el-input-number
+                    v-model="input"
+                    :min="1"
+                    label="描述文字"
+                  ></el-input-number
                 ></el-col>
                 <el-col class="alert_icon" :span="1">
                   <el-popover
                     placement="top-start"
                     width="200"
                     trigger="hover"
-                    content="机票最高折扣率"
+                    content="距名单收集结束前N天起，会议关键人（会议组织者）将收到提醒"
                   >
                     <i class="el-icon-warning" slot="reference"></i>
                   </el-popover>
@@ -344,8 +155,8 @@
             </el-col>
             <el-col class="item_margin" :span="12">
               <el-row :gutter="20">
-                <el-col :span="8" class="item_label">名单收集N天提醒</el-col>
-                <el-col :span="8"
+                <el-col :span="8" class="item_label">会议密码设置</el-col>
+                <el-col :span="14"
                   ><el-input v-model="input" placeholder="请输入内容"></el-input
                 ></el-col>
                 <el-col class="alert_icon" :span="1">
@@ -353,7 +164,7 @@
                     placement="top-start"
                     width="200"
                     trigger="hover"
-                    content="机票最高折扣率"
+                    content="代表需要输入该会议密码才能访问会议名单收集链接"
                   >
                     <i class="el-icon-warning" slot="reference"></i>
                   </el-popover>
@@ -362,8 +173,8 @@
             </el-col>
           </el-row>
         </el-card>
-        <el-card shadow="never">
-          <div class="title_small"><span>其他信息收集</span></div>
+        <!-- <el-card shadow="never">
+          <div class="title_small slider_nav4"><span>其他信息收集</span></div>
           <el-row :gutter="20">
             <el-col class="item_margin" :span="12">
               <el-row :gutter="20">
@@ -374,7 +185,7 @@
               </el-row>
             </el-col>
           </el-row>
-        </el-card>
+        </el-card> -->
       </div>
     </div>
     <div class="config_save_btn">save</div>
@@ -401,7 +212,6 @@ export default {
         "大交通控制设置",
         "大交通审批设置",
         "名单收集设置",
-        "其他信息收集",
         "已收集名单下载",
       ],
       // 模拟表格数据
@@ -430,74 +240,291 @@ export default {
       // 会议基本信息数据
       meetingBaseInfo: [
         {
-          enTitle: "meetingNum", // inputLable的英文
-          znTitle: "会议ID号", // inputLable的中文
-          input: "", // 输入框的值
-          type: "input", // 输入框的类型
+          name: "会议ID号", // inputLable的中文
+          v_model: "meetID",
+          value: "", // 输入框的值
+          isNecessary: true, // 是否为必填项
+          type: "text", // 输入框的类型
         },
         {
-          enTitle: "meetingPlace",
-          znTitle: "会议地点",
-          input: "",
-          type: "input",
+          name: "会议地点",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "text",
         },
         {
-          enTitle: "meetingStatus",
-          znTitle: "会议状态",
-          input: "",
-          type: "select",
-          options: [
-            {
-              value: "正常",
-              label: "正常",
-            },
-            {
-              value: "暂停",
-              label: "暂停",
-            },
-          ],
+          name: "会议状态",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "text",
         },
         {
-          enTitle: "meetingSubstance",
-          znTitle: "会议性质",
-          input: "",
-          type: "select",
-          options: [
-            {
-              value: "正常",
-              label: "正常",
-            },
-            {
-              value: "暂停",
-              label: "暂停",
-            },
-          ],
+          name: "会议姓名",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "text",
         },
         {
-          enTitle: "meetingName",
-          znTitle: "会议姓名",
-          input: "",
-          type: "input",
+          name: "会议描述",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "text",
         },
         {
-          enTitle: "meetingDescription",
-          znTitle: "会议描述",
-          input: "",
-          type: "input",
+          name: "会议开始日期",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "date",
         },
         {
-          enTitle: "meetingStartDate",
-          znTitle: "会议开始日期",
-          input: "",
-          type: "input",
+          name: "会议结束日期",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "date",
+        },
+
+        // {
+        //   enTitle: "meetingPlace",
+        //   znTitle: "会议地点",
+        //   input: "",
+        //   type: "input",
+        // },
+        // {
+        //   enTitle: "meetingStatus",
+        //   znTitle: "会议状态",
+        //   input: "",
+        //   type: "select",
+        //   options: [
+        //     '正常',
+        //     '暂停',
+        //   ],
+        // },
+        // {
+        //   enTitle: "meetingSubstance",
+        //   znTitle: "会议性质",
+        //   input: "",
+        //   type: "select",
+        //   options: [
+        //     '正常',
+        //     '暂停',
+        //   ],
+        // },
+        // {
+        //   enTitle: "meetingName",
+        //   znTitle: "会议姓名",
+        //   input: "",
+        //   type: "input",
+        // },
+        // {
+        //   enTitle: "meetingDescription",
+        //   znTitle: "会议描述",
+        //   input: "",
+        //   type: "input",
+        // },
+        // {
+        //   enTitle: "meetingStartDate",
+        //   znTitle: "会议开始日期",
+        //   input: "",
+        //   type: "input",
+        // },
+        // {
+        //   enTitle: "meetingEndDate",
+        //   znTitle: "会议结束日期",
+        //   input: "",
+        //   type: "input",
+        // },
+      ],
+      // 会议关键人信息
+      meetingKeyManInfo: [
+        {
+          name: "会议组织部门", // inputLable的中文
+          v_model: "meetDepartment",
+          value: "", // 输入框的值
+          isNecessary: true, // 是否为必填项
+          type: "text", // 输入框的类型
         },
         {
-          enTitle: "meetingEndDate",
-          znTitle: "会议结束日期",
-          input: "",
-          type: "input",
+          name: "行程安排",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "textarea",
+          width: 24,
         },
       ],
+      meetingBudget: {
+        warningRate: [
+          {
+            name: "大交通报价百分比预警", // inputLable的中文
+            v_model: "warningRate",
+            value: "", // 输入框的值
+            isNecessary: true, // 是否为必填项
+            type: "select", // 输入框的类型
+            width: 24,
+            option: [
+              "100%",
+              "95%",
+              "90%",
+              "85%",
+              "80%",
+              "75%",
+              "70%",
+              "65%",
+              "60%",
+              "55%",
+              "50%",
+              "45%",
+              "40%",
+              "35%",
+              "30%",
+              "25%",
+              "20%",
+              "15%",
+              "10%",
+              "5%",
+            ],
+            tip:
+              "自会议出票起，会议的预算使用百分比数值到达了预警值时，会议关键人（会议组织者）将通过邮件收到预警提醒",
+          },
+        ],
+      },
+      BTControl: {
+        maxRate: [
+          {
+            name: "最高折扣率", // inputLable的中文
+            v_model: "maxRate",
+            value: "", // 输入框的值
+            isNecessary: true, // 是否为必填项
+            type: "select", // 输入框的类型
+            width: 24,
+            option: [
+              "100%",
+              "95%",
+              "90%",
+              "85%",
+              "80%",
+              "75%",
+              "70%",
+              "65%",
+              "60%",
+              "55%",
+              "50%",
+              "45%",
+              "40%",
+              "35%",
+              "30%",
+              "25%",
+              "20%",
+              "15%",
+              "10%",
+              "5%",
+            ],
+            tip:
+              "查询机票时，系统将只提供符合最高折扣率以内可改可退含托运行李的航班选项",
+          },
+        ],
+        changeDate: [
+          {
+            name: "大交通政策启用日期",
+            v_model: "meetPlace",
+            value: "",
+            isNecessary: true,
+            type: "date",
+          },
+          {
+            name: "大交通政策结束日期",
+            v_model: "meetPlace",
+            value: "",
+            isNecessary: true,
+            type: "date",
+          },
+        ],
+        changeMaxRate: [
+          {
+            name: "允许更改的最高折扣率", // inputLable的中文
+            v_model: "changeMaxRate",
+            value: "", // 输入框的值
+            isNecessary: true, // 是否为必填项
+            type: "select", // 输入框的类型
+            width: 24,
+            option: [
+              "100%",
+              "95%",
+              "90%",
+              "85%",
+              "80%",
+              "75%",
+              "70%",
+              "65%",
+              "60%",
+              "55%",
+              "50%",
+              "45%",
+              "40%",
+              "35%",
+              "30%",
+              "25%",
+              "20%",
+              "15%",
+              "10%",
+              "5%",
+            ],
+            tip:
+              "改期查询机票时，系统将只提供符合最高折扣率以内的可改可退含托运行李航班选项",
+          },
+        ],
+      },
+      meetApprovalConfig: [
+        {
+          name: "大交通是否需要审批", // inputLable的中文
+          v_model: "meetDepartment",
+          value: "", // 输入框的值
+          isNecessary: true, // 是否为必填项
+          type: "radioButton", // 输入框的类型
+          option: ["需要", "不需要"],
+          isNeedApproval: [
+            {
+              name: "预录入名单免批",
+              v_model: "meetPlace",
+              value: "",
+              isNecessary: false,
+              type: "radio",
+              width:24
+            },
+            {
+              name: "后续名单免批",
+              v_model: "meetPlace",
+              value: "",
+              isNecessary: false,
+              type: "radio",
+              width:24
+            },
+            {
+              name: "内部员工免批",
+              v_model: "meetPlace",
+              value: "",
+              isNecessary: false,
+              type: "radio",
+              width:24
+            },
+          ],
+        },
+        {
+          name: "退改签免批", // inputLable的中文
+          v_model: "meetDepartment",
+          value: "", // 输入框的值
+          isNecessary: true, // 是否为必填项
+          type: "radioButton", // 输入框的类型
+          option: ["需要", "不需要"],
+        },
+      ],
+      timer: "",
       // 以上
     };
   },
@@ -512,17 +539,21 @@ export default {
         document.body.scrollTop;
       const left_slider = document.querySelector(".left_slider");
       const backup = document.querySelector(".backup");
+      const slider_nav0 = document.querySelector(".slider_nav0").offsetTop;
+      const slider_nav1 = document.querySelector(".slider_nav1").offsetTop;
       const slider_nav2 = document.querySelector(".slider_nav2").offsetTop;
-      const slider_nav3 = document.querySelector(".slider_nav3").offsetTop;
+      clearTimeout(this.timer);
       if (scrollTop > 80) {
         left_slider.classList.add("fix_sider");
         backup.classList.add("backup_show");
-        if (scrollTop > slider_nav2) {
-          this.currentSider = 1;
-          if (scrollTop > slider_nav3) {
-            this.currentSider = 2;
+        this.timer = setTimeout(() => {
+          if (scrollTop >= slider_nav1) {
+            this.currentSider = 1;
+            if (scrollTop >= slider_nav2) {
+              this.currentSider = 2;
+            }
           }
-        }
+        }, 100);
       } else {
         left_slider.classList.remove("fix_sider");
         backup.classList.remove("backup_show");
@@ -535,21 +566,42 @@ export default {
        * @return void
        */
       this.currentSider = num;
+      const number = document.querySelector(`.slider_nav${num}`).offsetTop;
+      this.Funback(number, 200);
     },
-    FunbackTop() {
-      //返回顶部
-      var scrollToptimer = setInterval(function () {
-        var top = document.body.scrollTop || document.documentElement.scrollTop;
-        var speed = top / 6;
-        if (document.body.scrollTop != 0) {
-          document.body.scrollTop -= speed;
+    // FunbackTop(num) {
+
+    //   //返回顶部
+    //   var scrollToptimer = setInterval(function () {
+    //     var top = document.body.scrollTop || document.documentElement.scrollTop;
+    //     var speed = top / 6;
+    //     if (document.body.scrollTop != 0) {
+    //       document.body.scrollTop -= speed;
+    //     } else {
+    //       document.documentElement.scrollTop -= speed;
+    //     }
+    //     if (top == 0) {
+    //       clearInterval(scrollToptimer);
+    //     }
+    //   }, 20);
+    // },
+    Funback(number, time) {
+      if (!time) {
+        document.body.scrollTop = document.documentElement.scrollTop = number;
+        return number;
+      }
+      const spacingTime = 20; // 设置循环的间隔时间  值越小消耗性能越高
+      let spacingInex = time / spacingTime; // 计算循环的次数
+      let nowTop = document.body.scrollTop + document.documentElement.scrollTop; // 获取当前滚动条位置
+      let everTop = (number - nowTop) / spacingInex; // 计算每次滑动的距离
+      let scrollTimer = setInterval(() => {
+        if (spacingInex > 0) {
+          spacingInex--;
+          this.Funback((nowTop += everTop));
         } else {
-          document.documentElement.scrollTop -= speed;
+          clearInterval(scrollTimer); // 清除计时器
         }
-        if (top == 0) {
-          clearInterval(scrollToptimer);
-        }
-      }, 20);
+      }, spacingTime);
     },
   },
   mounted() {
