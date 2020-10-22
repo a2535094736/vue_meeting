@@ -88,13 +88,10 @@
               ></span
             >
           </div>
-          <InputArea
-            :inputInfo="meetApprovalConfig"
-            :isNeedApproval="meetApprovalConfig[0].value !== '需要'"
-          ></InputArea>
+          <InputArea :inputInfo="meetApprovalConfig"></InputArea>
           <InputArea
             :inputInfo="meetApprovalConfig[0].isNeedApproval"
-            :isNeedApproval="meetApprovalConfig[0].value !== '需要'"
+            :isNeedApproval="mACC"
           ></InputArea>
         </el-card>
         <el-card shadow="never">
@@ -107,7 +104,7 @@
                 <el-col :span="8" class="item_label">名单收集结束日期</el-col>
                 <el-col :span="16"
                   ><el-date-picker
-                    v-model="travelStartDate"
+                    v-model="listCollectConfig[0].value"
                     type="date"
                     placeholder="选择日期"
                   >
@@ -120,7 +117,7 @@
                 <el-col :span="8" class="item_label">名单收集N天提醒</el-col>
                 <el-col :span="8"
                   ><el-input-number
-                    v-model="input"
+                    v-model="listCollectConfig[1].value"
                     :min="1"
                     label="描述文字"
                   ></el-input-number
@@ -144,11 +141,14 @@
           <el-row :gutter="20">
             <el-col class="item_margin" :span="12">
               <el-row :gutter="20">
-                <el-col :span="8" class="item_label">单收集状态</el-col>
+                <el-col :span="8" class="item_label">名单收集状态</el-col>
                 <el-col :span="16"
-                  ><el-radio-group class="radio_frame" v-model="listApprovel">
-                    <el-radio :label="3">暂停收集</el-radio>
-                    <el-radio :label="6">恢复收集</el-radio>
+                  ><el-radio-group
+                    class="radio_frame"
+                    v-model="listCollectConfig[2].value"
+                  >
+                    <el-radio label="暂停收集">暂停收集</el-radio>
+                    <el-radio label="恢复收集">恢复收集</el-radio>
                   </el-radio-group></el-col
                 >
               </el-row>
@@ -157,7 +157,10 @@
               <el-row :gutter="20">
                 <el-col :span="8" class="item_label">会议密码设置</el-col>
                 <el-col :span="14"
-                  ><el-input v-model="input" placeholder="请输入内容"></el-input
+                  ><el-input
+                    v-model="listCollectConfig[3].value"
+                    placeholder="请输入内容"
+                  ></el-input
                 ></el-col>
                 <el-col class="alert_icon" :span="1">
                   <el-popover
@@ -193,18 +196,12 @@
 </template>
 
 <script>
+import { log } from "util";
 import BreadCrumb from "../components/breadCurmb";
 import InputArea from "../components/inputArea";
 export default {
   data() {
     return {
-      input: "",
-      value: "",
-      textarea: "",
-      travelStartDate: "",
-      travelNeedApprovel: "需要",
-      reissueApprovel: "需要",
-      listApprovel: "",
       currentSider: 0, // 当前sliderItem所在位置
       // 页面侧边栏数据
       siderItem: [
@@ -221,20 +218,6 @@ export default {
         },
         {
           data: "1",
-        },
-      ],
-      options: [
-        {
-          value: "选项1",
-          label: "正常",
-        },
-        {
-          value: "选项2",
-          label: "结束",
-        },
-        {
-          value: "选项3",
-          label: "进行中",
         },
       ],
       // 会议基本信息数据
@@ -288,57 +271,6 @@ export default {
           isNecessary: true,
           type: "date",
         },
-
-        // {
-        //   enTitle: "meetingPlace",
-        //   znTitle: "会议地点",
-        //   input: "",
-        //   type: "input",
-        // },
-        // {
-        //   enTitle: "meetingStatus",
-        //   znTitle: "会议状态",
-        //   input: "",
-        //   type: "select",
-        //   options: [
-        //     '正常',
-        //     '暂停',
-        //   ],
-        // },
-        // {
-        //   enTitle: "meetingSubstance",
-        //   znTitle: "会议性质",
-        //   input: "",
-        //   type: "select",
-        //   options: [
-        //     '正常',
-        //     '暂停',
-        //   ],
-        // },
-        // {
-        //   enTitle: "meetingName",
-        //   znTitle: "会议姓名",
-        //   input: "",
-        //   type: "input",
-        // },
-        // {
-        //   enTitle: "meetingDescription",
-        //   znTitle: "会议描述",
-        //   input: "",
-        //   type: "input",
-        // },
-        // {
-        //   enTitle: "meetingStartDate",
-        //   znTitle: "会议开始日期",
-        //   input: "",
-        //   type: "input",
-        // },
-        // {
-        //   enTitle: "meetingEndDate",
-        //   znTitle: "会议结束日期",
-        //   input: "",
-        //   type: "input",
-        // },
       ],
       // 会议关键人信息
       meetingKeyManInfo: [
@@ -394,6 +326,7 @@ export default {
           },
         ],
       },
+      // 大交通控制
       BTControl: {
         maxRate: [
           {
@@ -480,6 +413,7 @@ export default {
           },
         ],
       },
+      // 会议审批设置
       meetApprovalConfig: [
         {
           name: "大交通是否需要审批", // inputLable的中文
@@ -495,7 +429,7 @@ export default {
               value: "",
               isNecessary: false,
               type: "radio",
-              width:24
+              width: 24,
             },
             {
               name: "后续名单免批",
@@ -503,7 +437,7 @@ export default {
               value: "",
               isNecessary: false,
               type: "radio",
-              width:24
+              width: 24,
             },
             {
               name: "内部员工免批",
@@ -511,7 +445,7 @@ export default {
               value: "",
               isNecessary: false,
               type: "radio",
-              width:24
+              width: 24,
             },
           ],
         },
@@ -524,9 +458,58 @@ export default {
           option: ["需要", "不需要"],
         },
       ],
+      listCollectConfig: [
+        {
+          name: "名单收集结束日期",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "date",
+        },
+        {
+          name: "名单收集N天提醒",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "date",
+        },
+        {
+          name: "名单收集状态",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "date",
+        },
+        {
+          name: "名单收集N天提醒",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "date",
+        },
+      ],
       timer: "",
       // 以上
     };
+  },
+  computed: {
+    // 当前大交通是否需要审批
+    mACC: function () {
+      return this.meetApprovalConfig[0].value !== "需要";
+    },
+  },
+  watch: {
+    // 监听当前大交通审批是否需要审批
+    meetApprovalConfig: {
+      handler(newQuestion, oldQuestion) {
+        if (newQuestion[0].value == "不需要") {
+          newQuestion[0].isNeedApproval.map((item) => {
+            item.value = "";
+          });
+        }
+      },
+      deep: true,
+    },
   },
   methods: {
     handleScroll() {
@@ -569,22 +552,6 @@ export default {
       const number = document.querySelector(`.slider_nav${num}`).offsetTop;
       this.Funback(number, 200);
     },
-    // FunbackTop(num) {
-
-    //   //返回顶部
-    //   var scrollToptimer = setInterval(function () {
-    //     var top = document.body.scrollTop || document.documentElement.scrollTop;
-    //     var speed = top / 6;
-    //     if (document.body.scrollTop != 0) {
-    //       document.body.scrollTop -= speed;
-    //     } else {
-    //       document.documentElement.scrollTop -= speed;
-    //     }
-    //     if (top == 0) {
-    //       clearInterval(scrollToptimer);
-    //     }
-    //   }, 20);
-    // },
     Funback(number, time) {
       if (!time) {
         document.body.scrollTop = document.documentElement.scrollTop = number;

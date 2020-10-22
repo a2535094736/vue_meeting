@@ -36,6 +36,10 @@ body,
 .el-table th {
   background: #eeeeee;
 }
+.el-radio,
+.inputarea_check {
+  width: 75px;
+}
 .el-card {
   margin-bottom: 20px;
 }
@@ -46,7 +50,8 @@ body,
 .el-date-editor.el-input__inner {
   width: 100%;
 }
-.radio_frame {
+.radio_frame,
+.el-checkbox-group {
   padding: 12px;
 }
 .container {

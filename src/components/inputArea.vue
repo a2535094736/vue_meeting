@@ -28,13 +28,17 @@
           >
           </el-input
         ></el-col>
-        <el-col  v-if="item.type == 'radio'" :span="20"
-          ><el-radio-group :disabled='isNeedApproval' class="radio_frame" v-model="item.value">
-            <el-radio 
-              v-for="(item1) in item.option ||['是','否']"
+        <el-col v-if="item.type == 'radio'" :span="20"
+          ><el-radio-group
+            :disabled="isNeedApproval"
+            class="radio_frame"
+            v-model="item.value"
+          >
+            <el-radio
+              v-for="item1 in item.option || ['是', '否']"
               :key="item1"
               :label="item1"
-              >{{ item1}}</el-radio
+              >{{ item1 }}</el-radio
             >
           </el-radio-group></el-col
         >
@@ -48,7 +52,7 @@
             >
             </el-option> </el-select
         ></el-col>
-        <el-col v-if="item.type !== 'textarea'" class="alert_icon" :span="1">
+        <el-col v-if="item.tip" class="alert_icon" :span="1">
           <el-popover
             placement="top-start"
             width="200"
@@ -81,27 +85,34 @@
           </el-date-picker
         ></el-col>
         <el-col v-if="item.type == 'select'" :span="16"
-          ><el-select v-model="item.input" placeholder="请选择">
+          ><el-select v-model="item.input" :placeholder="'请选择' + item.name">
             <el-option
-              v-for="item1 in item.options"
+              v-for="item1 in item.option"
               :key="item1"
               :label="item1"
               :value="item1"
             >
             </el-option> </el-select
         ></el-col>
-        <el-col  v-if="item.type == 'radio'" :span="16"
-          ><el-radio-group :disabled='isNeedApproval' class="radio_frame" v-model="item.value">
-            <el-radio 
-              v-for="(item1) in item.option ||['是','否']"
+        <el-col v-if="item.type == 'radio'" :span="16"
+          ><el-radio-group
+            :disabled="isNeedApproval"
+            class="radio_frame"
+            v-model="item.value"
+          >
+            <el-radio
+              v-for="item1 in item.option || ['是', '否']"
               :key="item1"
               :label="item1"
-              >{{ item1}}</el-radio
+              >{{ item1 }}</el-radio
             >
-          </el-radio-group></el-col
-        >
-        <el-col v-if="item.type == 'radioButton'" :span="16">
-          <el-radio-group v-model="item.value">
+          </el-radio-group>
+          <el-checkbox-group v-if="item.hasCheck&&item.value=='是'"  v-model="item.checkbox">
+            <el-checkbox v-for="item1 in item.checkList" :key="item1"  class="inputarea_check" :label="item1"></el-checkbox>
+          </el-checkbox-group>
+        </el-col>
+        <el-col v-if="item.type == 'radioButton'"  :span="16">
+          <el-radio-group  v-model="item.value">
             <el-radio-button
               v-for="item1 in item.option"
               :key="item1"
@@ -120,11 +131,11 @@ export default {
       type: Array,
       default: [],
     },
-    isNeedApproval:{
+    isNeedApproval: {
       type: Boolean,
       default: false,
-    }
-  },
+    },
+  }
 };
 </script>
 
