@@ -22,7 +22,12 @@
         </div>
       </div>
       <div class="mainer">
-        <el-form :model="meetingInfoFrom" label-position="left" :rules='rules' ref="meetingInfoFromFef" label-width="35%">
+        <el-form
+          :model="meetingInfoFrom"
+          label-position="left"
+          ref="meetingInfoFromFef"
+          label-width="35%"
+        >
           <el-row class="title">会议信息详情</el-row>
           <el-card shadow="never">
             <div class="title_small slider_nav0">
@@ -496,13 +501,8 @@ export default {
           },
         ],
       },
-      rules: {
-          text: [
-            { required: true, message: '请输入内容', trigger: 'blur' },
-          ],
-          
-        },
-
+      // https://blog.csdn.net/belalds/article/details/82428098
+      // 参考案例
       timer: "",
       // 以上
     };

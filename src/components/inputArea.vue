@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20">
     <el-col
-      v-for="item in inputInfo"
+      v-for="(item,index) in inputInfo"
       :key="item.name"
       class="item_margin"
       :span="item.width == 24 ? 24 : 12"
@@ -51,12 +51,18 @@
           ></el-input
         ></el-col>-->
         <el-col v-if="item.type == 'text'" :span="24">
-          <el-form-item :label="item.name" prop="text" >
+          <el-form-item
+            :label="item.name"
+            :prop="item.value"
+            :rules="{
+      required: true, message: '请输入', trigger: 'blur'
+    }"
+          >
             <el-input v-model="item.value" :placeholder="'请输入' + item.name"></el-input>
           </el-form-item>
         </el-col>
         <el-col v-if="item.type == 'date'" :span="24">
-          <el-form-item :label="item.name" :required="item.isNecessary">
+          <el-form-item prop="text" :label="item.name">
             <el-date-picker
               v-model="item.value"
               type="date"
