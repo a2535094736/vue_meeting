@@ -181,6 +181,7 @@ body,
   line-height: 40px;
   font-size: 20px;
   color: #2d8cf0;
+  text-align: center;
 }
 .backup {
   display: none;

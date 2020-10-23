@@ -11,13 +11,17 @@
               class="sider_item"
               :class="index == currentSider ? 'isActive' : ''"
               @click="handelSlider(index)"
-            >{{ item }}</div>
+            >
+              {{ item }}
+            </div>
           </div>
           <div @click="Funback(0, 200)" class="backup">
             <i class="el-icon-caret-top"></i>
           </div>
           <div class="submit_all_btn">
-            <el-button type="primary" @click="checkValid" size="default">点击提交</el-button>
+            <el-button type="primary" @click="checkValid" size="default"
+              >点击提交</el-button
+            >
           </div>
         </div>
       </div>
@@ -26,7 +30,7 @@
           :model="meetingInfoFrom"
           label-position="left"
           ref="meetingInfoFromFef"
-          label-width="35%"
+          :rules="rules"
         >
           <el-row class="title">会议信息详情</el-row>
           <el-card shadow="never">
@@ -37,16 +41,33 @@
             <div class="title_small">
               <span>会议关键人</span>
             </div>
-            <InputArea :inputInfo="meetingInfoFrom.meetingKeyManInfo"></InputArea>
+            <InputArea
+              :inputInfo="meetingInfoFrom.meetingKeyManInfo"
+            ></InputArea>
             <el-table :data="tableData" border style="width: 100%">
               <el-table-column type="index" width="80">
                 <template slot="header">序号</template>
               </el-table-column>
-              <el-table-column prop="date" label="会议关键人角色"></el-table-column>
-              <el-table-column prop="name" label="会议关键人姓名"></el-table-column>
-              <el-table-column prop="address" label="会议关键人手机号"></el-table-column>
-              <el-table-column prop="address" label="会议关键人邮箱"></el-table-column>
-              <el-table-column prop="address" label="会议关键人座机"></el-table-column>
+              <el-table-column
+                prop="date"
+                label="会议关键人角色"
+              ></el-table-column>
+              <el-table-column
+                prop="name"
+                label="会议关键人姓名"
+              ></el-table-column>
+              <el-table-column
+                prop="address"
+                label="会议关键人手机号"
+              ></el-table-column>
+              <el-table-column
+                prop="address"
+                label="会议关键人邮箱"
+              ></el-table-column>
+              <el-table-column
+                prop="address"
+                label="会议关键人座机"
+              ></el-table-column>
             </el-table>
             <div class="title_small">
               <span>会议报价</span>
@@ -57,11 +78,19 @@
               </el-table-column>
               <el-table-column prop="date" label="报价金额"></el-table-column>
               <el-table-column prop="name" label="百分比"></el-table-column>
-              <el-table-column prop="address" label="成本中心"></el-table-column>
+              <el-table-column
+                prop="address"
+                label="成本中心"
+              ></el-table-column>
               <el-table-column prop="address" label="GL ACCT"></el-table-column>
-              <el-table-column prop="address" label="WBS Code"></el-table-column>
+              <el-table-column
+                prop="address"
+                label="WBS Code"
+              ></el-table-column>
             </el-table>
-            <InputArea :inputInfo="meetingInfoFrom.meetingBudget.warningRate"></InputArea>
+            <InputArea
+              :inputInfo="meetingInfoFrom.meetingBudget.warningRate"
+            ></InputArea>
           </el-card>
           <el-card shadow="never">
             <div class="title_small slider_nav1">
@@ -70,19 +99,29 @@
             <div class="title_small">
               <span>机票类设置：舱等设置</span>
             </div>
-            <InputArea :inputInfo="meetingInfoFrom.BTControl.maxRate"></InputArea>
-            <div class="item_label">温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068</div>
+            <InputArea
+              :inputInfo="meetingInfoFrom.BTControl.maxRate"
+            ></InputArea>
+            <div class="item_label">
+              温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068
+            </div>
           </el-card>
           <el-card shadow="never">
             <div class="title_small slider_nav2">
               <span>大交通控制设置(改期）</span>
             </div>
-            <InputArea :inputInfo="meetingInfoFrom.BTControl.changeDate"></InputArea>
+            <InputArea
+              :inputInfo="meetingInfoFrom.BTControl.changeDate"
+            ></InputArea>
             <div class="title_small">
               <span>机票类设置：舱等设置</span>
             </div>
-            <InputArea :inputInfo="meetingInfoFrom.BTControl.changeMaxRate"></InputArea>
-            <div class="item_label">温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068</div>
+            <InputArea
+              :inputInfo="meetingInfoFrom.BTControl.changeMaxRate"
+            ></InputArea>
+            <div class="item_label">
+              温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068
+            </div>
           </el-card>
           <el-card shadow="never">
             <div class="title_small slider_nav4">
@@ -91,7 +130,9 @@
                 <el-button type="text" size="small">查看预录入名单</el-button>
               </span>
             </div>
-            <InputArea :inputInfo="meetingInfoFrom.meetApprovalConfig"></InputArea>
+            <InputArea
+              :inputInfo="meetingInfoFrom.meetApprovalConfig"
+            ></InputArea>
             <InputArea
               :inputInfo="meetingInfoFrom.meetApprovalConfig[0].isNeedApproval"
               :isNeedApproval="mACC"
@@ -501,8 +542,14 @@ export default {
           },
         ],
       },
+
       // https://blog.csdn.net/belalds/article/details/82428098
       // 参考案例
+      rules: {
+        value: [
+          { required: true, message: "zzzz不能为空", trigger: "blur" },
+        ]
+      },
       timer: "",
       // 以上
     };
