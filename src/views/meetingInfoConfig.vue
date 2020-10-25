@@ -24,10 +24,14 @@
         </div>
       </div>
       <div class="mainer">
+        <el-form :model="dynamicValidateForm" ref="dynamicValidateFormFef">
         <el-row class="title">会议信息详情</el-row>
         <el-card shadow="never">
           <div class="title_small slider_nav0"><span>会议基本信息</span></div>
-          <InputArea :inputInfo="meetingBaseInfo"></InputArea>
+          
+
+          <InputArea :inputInfo="dynamicValidateForm"></InputArea>
+
           <div class="title_small"><span>会议关键人</span></div>
           <InputArea :inputInfo="meetingKeyManInfo"></InputArea>
           <el-table :data="tableData" border style="width: 100%">
@@ -189,6 +193,7 @@
             </el-col>
           </el-row>
         </el-card> -->
+        </el-form>
       </div>
     </div>
     <div class="config_save_btn">save</div>
@@ -493,6 +498,12 @@ export default {
     };
   },
   computed: {
+    dynamicValidateForm:function(name) {
+      return {
+        dynamicValidateForm:this.meetingBaseInfo,
+      };
+    },
+
     // 当前大交通是否需要审批
     mACC: function () {
       return this.meetApprovalConfig[0].value !== "需要";
