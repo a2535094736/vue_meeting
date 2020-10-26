@@ -11,175 +11,135 @@
               class="sider_item"
               :class="index == currentSider ? 'isActive' : ''"
               @click="handelSlider(index)"
-            >
-              {{ item }}
-            </div>
+            >{{ item }}</div>
           </div>
           <div @click="Funback(0, 200)" class="backup">
             <i class="el-icon-caret-top"></i>
           </div>
           <div class="submit_all_btn">
-            <el-button type="primary" size="default">点击提交</el-button>
+            <el-button type="primary" size="default" @click="meetingInfoDetailSubmit">点击提交</el-button>
           </div>
         </div>
       </div>
       <div class="mainer">
-        <el-form :model="dynamicValidateForm" ref="dynamicValidateFormFef">
         <el-row class="title">会议信息详情</el-row>
         <el-card shadow="never">
-          <div class="title_small slider_nav0"><span>会议基本信息</span></div>
-          
+          <div class="title_small slider_nav0">
+            <span>会议基本信息</span>
+          </div>
+          <el-form
+            label-position="left"
+            :model="dynamicValidateForm('meetingBaseInfo')"
+            ref="meetingBaseInfoRef"
+          >
+            <InputArea :inputInfo="dynamicValidateForm('meetingBaseInfo')"></InputArea>
+          </el-form>
 
-          <InputArea :inputInfo="dynamicValidateForm"></InputArea>
-
-          <div class="title_small"><span>会议关键人</span></div>
-          <InputArea :inputInfo="meetingKeyManInfo"></InputArea>
+          <div class="title_small">
+            <span>会议关键人</span>
+          </div>
+          <el-form
+            label-position="left"
+            :model="dynamicValidateForm('meetingKeyManInfo')"
+            ref="meetingKeyManInfoRef"
+          >
+            <InputArea :inputInfo="dynamicValidateForm('meetingKeyManInfo')"></InputArea>
+          </el-form>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column type="index" width="80">
-              <template slot="header"> 序号 </template>
+              <template slot="header">序号</template>
             </el-table-column>
-            <el-table-column prop="date" label="会议关键人角色">
-            </el-table-column>
-            <el-table-column prop="name" label="会议关键人姓名">
-            </el-table-column>
-            <el-table-column prop="address" label="会议关键人手机号">
-            </el-table-column>
-            <el-table-column prop="address" label="会议关键人邮箱">
-            </el-table-column>
-            <el-table-column prop="address" label="会议关键人座机">
-            </el-table-column>
+            <el-table-column prop="date" label="会议关键人角色"></el-table-column>
+            <el-table-column prop="name" label="会议关键人姓名"></el-table-column>
+            <el-table-column prop="address" label="会议关键人手机号"></el-table-column>
+            <el-table-column prop="address" label="会议关键人邮箱"></el-table-column>
+            <el-table-column prop="address" label="会议关键人座机"></el-table-column>
           </el-table>
-          <div class="title_small"><span>会议报价</span></div>
+          <div class="title_small">
+            <span>会议报价</span>
+          </div>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column type="index" width="80">
-              <template slot="header"> 序号 </template>
+              <template slot="header">序号</template>
             </el-table-column>
-            <el-table-column prop="date" label="报价金额"> </el-table-column>
-            <el-table-column prop="name" label="百分比"> </el-table-column>
-            <el-table-column prop="address" label="成本中心"> </el-table-column>
-            <el-table-column prop="address" label="GL ACCT"> </el-table-column>
-            <el-table-column prop="address" label="WBS Code"> </el-table-column>
+            <el-table-column prop="date" label="报价金额"></el-table-column>
+            <el-table-column prop="name" label="百分比"></el-table-column>
+            <el-table-column prop="address" label="成本中心"></el-table-column>
+            <el-table-column prop="address" label="GL ACCT"></el-table-column>
+            <el-table-column prop="address" label="WBS Code"></el-table-column>
           </el-table>
-          <InputArea :inputInfo="meetingBudget.warningRate"></InputArea>
+          <el-form
+            label-position="left"
+            :model="dynamicValidateForm('meetingBudget.warningRate')"
+            ref="warningRateRef"
+          >
+            <InputArea :inputInfo="dynamicValidateForm('meetingBudget.warningRate')"></InputArea>
+          </el-form>
         </el-card>
-        <el-card shadow="never">
+        <!-- <el-card shadow="never">
           <div class="title_small slider_nav1">
             <span>大交通管控设置(出票）</span>
           </div>
-          <div class="title_small"><span>机票类设置：舱等设置</span></div>
-          <InputArea :inputInfo="BTControl.maxRate"></InputArea>
-          <div class="item_label">
-            温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068
+          <div class="title_small">
+            <span>机票类设置：舱等设置</span>
           </div>
+          <InputArea :inputInfo="BTControl.maxRate"></InputArea>
+          <div class="item_label">温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068</div>
         </el-card>
         <el-card shadow="never">
           <div class="title_small slider_nav2">
             <span>大交通控制设置(改期）</span>
           </div>
           <InputArea :inputInfo="BTControl.changeDate"></InputArea>
-          <div class="title_small"><span>机票类设置：舱等设置</span></div>
-          <InputArea :inputInfo="BTControl.changeMaxRate"></InputArea>
-          <div class="item_label">
-            温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068
+          <div class="title_small">
+            <span>机票类设置：舱等设置</span>
           </div>
+          <InputArea :inputInfo="BTControl.changeMaxRate"></InputArea>
+          <div class="item_label">温馨提示：商务舱、商务座、高级软卧等需特批舱位请线下联系大交通服务专员40088—400068</div>
+        </el-card>-->
+        <el-card shadow="never">
+          <div class="title_small slider_nav1">
+            <span>会议审批设置</span>
+            <span>
+              <el-button type="text" size="small">查看预录入名单</el-button>
+            </span>
+          </div>
+          <el-form
+            label-position="left"
+            :model="dynamicValidateForm('meetApprovalConfig')"
+            ref="meetApprovalConfigRef"
+          >
+            <InputArea
+              :inputInfo="dynamicValidateForm('meetApprovalConfig')"
+              :isNeedApproval="mACC"
+            ></InputArea>
+          </el-form>
         </el-card>
         <el-card shadow="never">
-          <div class="title_small slider_nav4">
-            <span>会议审批设置</span
-            ><span
-              ><el-button type="text" size="small"
-                >查看预录入名单</el-button
-              ></span
-            >
+          <div class="title_small slider_nav2">
+            <span>名单收集设置(收集日期）</span>
           </div>
-          <InputArea :inputInfo="meetApprovalConfig"></InputArea>
-          <InputArea
-            :inputInfo="meetApprovalConfig[0].isNeedApproval"
-            :isNeedApproval="mACC"
-          ></InputArea>
+          <el-form
+            label-position="left"
+            :model="dynamicValidateForm('listCollectConfigDate')"
+            ref="listCollectConfigDateRef"
+          >
+            <InputArea :inputInfo="dynamicValidateForm('listCollectConfigDate')"></InputArea>
+          </el-form>
         </el-card>
         <el-card shadow="never">
           <div class="title_small slider_nav3">
-            <span>名单收集设置(收集日期）</span>
+            <span>名单收集设置(收集状态）</span>
           </div>
-          <el-row :gutter="20">
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">名单收集结束日期</el-col>
-                <el-col :span="16"
-                  ><el-date-picker
-                    v-model="listCollectConfig[0].value"
-                    type="date"
-                    placeholder="选择日期"
-                  >
-                  </el-date-picker
-                ></el-col>
-              </el-row>
-            </el-col>
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">名单收集N天提醒</el-col>
-                <el-col :span="8"
-                  ><el-input-number
-                    v-model="listCollectConfig[1].value"
-                    :min="1"
-                    label="描述文字"
-                  ></el-input-number
-                ></el-col>
-                <el-col class="alert_icon" :span="1">
-                  <el-popover
-                    placement="top-start"
-                    width="200"
-                    trigger="hover"
-                    content="距名单收集结束前N天起，会议关键人（会议组织者）将收到提醒"
-                  >
-                    <i class="el-icon-warning" slot="reference"></i>
-                  </el-popover>
-                </el-col>
-              </el-row>
-            </el-col>
-          </el-row>
+          <el-form
+            label-position="left"
+            :model="dynamicValidateForm('listCollectConfigStatus')"
+            ref="listCollectConfigStatusRef"
+          >
+            <InputArea :inputInfo="dynamicValidateForm('listCollectConfigStatus')"></InputArea>
+          </el-form>
         </el-card>
-        <el-card shadow="never">
-          <div class="title_small"><span>名单收集设置(收集状态）</span></div>
-          <el-row :gutter="20">
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">名单收集状态</el-col>
-                <el-col :span="16"
-                  ><el-radio-group
-                    class="radio_frame"
-                    v-model="listCollectConfig[2].value"
-                  >
-                    <el-radio label="暂停收集">暂停收集</el-radio>
-                    <el-radio label="恢复收集">恢复收集</el-radio>
-                  </el-radio-group></el-col
-                >
-              </el-row>
-            </el-col>
-            <el-col class="item_margin" :span="12">
-              <el-row :gutter="20">
-                <el-col :span="8" class="item_label">会议密码设置</el-col>
-                <el-col :span="14"
-                  ><el-input
-                    v-model="listCollectConfig[3].value"
-                    placeholder="请输入内容"
-                  ></el-input
-                ></el-col>
-                <el-col class="alert_icon" :span="1">
-                  <el-popover
-                    placement="top-start"
-                    width="200"
-                    trigger="hover"
-                    content="代表需要输入该会议密码才能访问会议名单收集链接"
-                  >
-                    <i class="el-icon-warning" slot="reference"></i>
-                  </el-popover>
-                </el-col>
-              </el-row>
-            </el-col>
-          </el-row>
-        </el-card>
+
         <!-- <el-card shadow="never">
           <div class="title_small slider_nav4"><span>其他信息收集</span></div>
           <el-row :gutter="20">
@@ -192,8 +152,7 @@
               </el-row>
             </el-col>
           </el-row>
-        </el-card> -->
-        </el-form>
+        </el-card>-->
       </div>
     </div>
     <div class="config_save_btn">save</div>
@@ -211,7 +170,6 @@ export default {
       // 页面侧边栏数据
       siderItem: [
         "会议基本信息",
-        "大交通控制设置",
         "大交通审批设置",
         "名单收集设置",
         "已收集名单下载",
@@ -303,7 +261,6 @@ export default {
             value: "", // 输入框的值
             isNecessary: true, // 是否为必填项
             type: "select", // 输入框的类型
-            width: 24,
             option: [
               "100%",
               "95%",
@@ -427,32 +384,6 @@ export default {
           isNecessary: true, // 是否为必填项
           type: "radioButton", // 输入框的类型
           option: ["需要", "不需要"],
-          isNeedApproval: [
-            {
-              name: "预录入名单免批",
-              v_model: "meetPlace",
-              value: "",
-              isNecessary: false,
-              type: "radio",
-              width: 24,
-            },
-            {
-              name: "后续名单免批",
-              v_model: "meetPlace",
-              value: "",
-              isNecessary: false,
-              type: "radio",
-              width: 24,
-            },
-            {
-              name: "内部员工免批",
-              v_model: "meetPlace",
-              value: "",
-              isNecessary: false,
-              type: "radio",
-              width: 24,
-            },
-          ],
         },
         {
           name: "退改签免批", // inputLable的中文
@@ -462,8 +393,15 @@ export default {
           type: "radioButton", // 输入框的类型
           option: ["需要", "不需要"],
         },
+        {
+          name: "退改签免批", // inputLable的中文
+          v_model: "meetDepartment",
+          value: "", // 输入框的值
+          isNecessary: false, // 是否为必填项
+          type: "radio", // 输入框的类型
+        },
       ],
-      listCollectConfig: [
+      listCollectConfigDate: [
         {
           name: "名单收集结束日期",
           v_model: "meetPlace",
@@ -476,21 +414,26 @@ export default {
           v_model: "meetPlace",
           value: "",
           isNecessary: true,
-          type: "date",
+          type: "textNumber",
+          tip: "距名单收集结束前N天起，会议关键人（会议组织者）将收到提醒",
         },
+      ],
+      listCollectConfigStatus: [
         {
           name: "名单收集状态",
           v_model: "meetPlace",
           value: "",
           isNecessary: true,
-          type: "date",
+          type: "radio",
+          option: ["暂停收集", "恢复收集"],
         },
         {
-          name: "名单收集N天提醒",
+          name: "会议密码设置",
           v_model: "meetPlace",
           value: "",
           isNecessary: true,
-          type: "date",
+          type: "text",
+          tip: "代表需要输入该会议密码才能访问会议名单收集链接",
         },
       ],
       timer: "",
@@ -498,30 +441,25 @@ export default {
     };
   },
   computed: {
-    dynamicValidateForm:function(name) {
-      return {
-        dynamicValidateForm:this.meetingBaseInfo,
+    dynamicValidateForm: function () {
+      return function (name) {
+        if (name.indexOf(".") != -1) {
+          const arr = name.split(".");
+          // console.log(arr);
+          return { dynamicValidateForm: this[arr[0]][arr[1]] };
+        } else {
+          return {
+            dynamicValidateForm: this[name],
+          };
+        }
       };
     },
-
     // 当前大交通是否需要审批
     mACC: function () {
       return this.meetApprovalConfig[0].value !== "需要";
     },
   },
-  watch: {
-    // 监听当前大交通审批是否需要审批
-    meetApprovalConfig: {
-      handler(newQuestion, oldQuestion) {
-        if (newQuestion[0].value == "不需要") {
-          newQuestion[0].isNeedApproval.map((item) => {
-            item.value = "";
-          });
-        }
-      },
-      deep: true,
-    },
-  },
+  watch: {},
   methods: {
     handleScroll() {
       /**
@@ -580,6 +518,31 @@ export default {
           clearInterval(scrollTimer); // 清除计时器
         }
       }, spacingTime);
+    },
+    // 提交所有信息 需验证
+    meetingInfoDetailSubmit() {
+      let a = true;
+      const validArr = [
+        "meetingBaseInfoRef",
+        "meetingKeyManInfoRef",
+        "warningRateRef",
+        "meetApprovalConfigRef",
+        "listCollectConfigDateRef",
+        "listCollectConfigStatusRef",
+      ];
+      validArr.forEach((item) => {
+        this.$refs[item].validate((valid) => {
+          if (valid) {
+          } else {
+            console.log("error submit!!");
+            a = false;
+            return false;
+          }
+        });
+      });
+      if (a == true) {
+        alert("summit");
+      }
     },
   },
   mounted() {
