@@ -71,7 +71,8 @@
             </div>
             <InputArea
               :inputInfo="meetingInfoFrom.meetApprovalConfig"
-              currentTime="meetApprovalConfig"  :isNeedApproval="mACC"
+              currentTime="meetApprovalConfig"
+              :isNeedApproval="mACC"
             ></InputArea>
           </el-card>
           <el-card shadow="never">
@@ -305,7 +306,8 @@ export default {
         value: [{ required: true, message: "zzzz不能为空", trigger: "blur" }],
       },
       timer: "",
-      // 以上
+      // axios数据
+      axiosDate:{}
     };
   },
   computed: {
@@ -328,6 +330,9 @@ export default {
     },
   },
   watch: {},
+  created() {
+    this.getMeetingDate();
+  },
   methods: {
     handleScroll() {
       /**
@@ -359,6 +364,23 @@ export default {
         backup.classList.remove("backup_show");
         this.currentSider = 0;
       }
+    },
+    getMeetingDate() {
+      this.$axios
+        .get(
+          "https://ezway.efasco.com/RocheService/Service.asmx/GetEvent?eventid=1"
+        )
+        .then((response) => {
+          console.log(response);
+          if(response.status !==200){
+            return this.$message.error('获取数据失败')
+          }
+          this.$message.success('获取数据成功')
+          this.axiosDate = response.data
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     handelSlider(num) {
       /**

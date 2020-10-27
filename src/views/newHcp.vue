@@ -56,6 +56,20 @@
             <el-button type="primary" size="mini" @click="renderFrequentContact">应用</el-button>
           </el-col>
         </el-row>
+        <el-row class="freq_row">
+          <el-col :span="8" :offset="0">姓名：{{diy_json2.HCPName}}</el-col>
+          <el-col :span="13" :offset="0">手机号：{{diy_json2.StaffMobile}}</el-col>
+          <el-col :span="3" :offset="0">
+            <el-button type="primary" size="mini" @click="renderFrequentContact">应用</el-button>
+          </el-col>
+        </el-row>
+        <el-row class="freq_row">
+          <el-col :span="8" :offset="0">姓名：{{diy_json2.HCPName}}</el-col>
+          <el-col :span="13" :offset="0">手机号：{{diy_json2.StaffMobile}}</el-col>
+          <el-col :span="3" :offset="0">
+            <el-button type="primary" size="mini" @click="renderFrequentContact">应用</el-button>
+          </el-col>
+        </el-row>
         <span slot="footer" class="dialog-footer">
           <el-button @click="openFrequentContacts = false">取 消</el-button>
         </span>
