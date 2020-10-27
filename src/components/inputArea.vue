@@ -31,10 +31,10 @@
         <el-row v-if="item.type == 'radio'">
           <el-radio-group :disabled="isNeedApproval" class="radio_frame" v-model="item.value">
             <el-radio
-              v-for="item1 in item.option || ['是', '否']"
+              v-for="item1 in item.option || ['Y', 'N']"
               :key="item1"
               :label="item1"
-            >{{ item1 }}</el-radio>
+            >{{ item1 |handerIsOr }}</el-radio>
           </el-radio-group>
           <el-checkbox-group v-if="item.hasCheck && item.value == '是'" v-model="item.checkbox">
             <el-checkbox
@@ -102,6 +102,18 @@ export default {
   },
   computed: {
   },
+  filters:{
+    handerIsOr(str){
+      if(str=='Y'){
+        return '是'
+      }else if(str=='N'){
+        return '否'
+      }else{
+        return str
+      }
+
+    }
+  }
 };
 </script>
 
