@@ -45,6 +45,9 @@ export default {
 <style lang="less">
 .container_header {
   background-color: #29282e;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
 }
 .header {
   width: 1280px;

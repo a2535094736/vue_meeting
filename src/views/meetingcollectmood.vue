@@ -9,79 +9,79 @@
       </div>
       <div class="mainer">
         <el-form label-position="left" :model="userDefinedForm" ref="meetingInfoFromRef">
-        <el-row class="title">自定义名单收集模版</el-row>
-        <el-card shadow="never">
-          <div class="title_small">
-            <span>HCP 基本信息</span>
-            <span>
-              <el-button type="text" size="small">查看常用联系人</el-button>
-            </span>
-          </div>
-          <InputArea :inputInfo="userDefinedForm.hcpInfo" currentTime="hcpInfo"></InputArea>
-        </el-card>
-        <el-card shadow="never">
-          <div class="title_small">
-            <span>参会人参会信息</span>
-          </div>
-          <InputArea :inputInfo="userDefinedForm.participantInfo" currentTime="participantInfo"></InputArea>
-        </el-card>
-        <el-card shadow="never">
-          <div class="title_small">
-            <span>HCP 负责人（员工）基本信息</span>
-          </div>
-          <InputArea :inputInfo="userDefinedForm.staffInfo" currentTime="staffInfo"></InputArea>
-        </el-card>
-        <el-row class="title">自定义名单收集模版</el-row>
-        <el-card shadow="never">
-          <div class="title_small">
-            <span>添加自定义填写项</span>
-          </div>
-          <!-- 用户点击添加自定义选项按钮 -->
-          <div class="user_free_area">
-            <div
-              v-for="item in userDefined"
-              :key="item.id"
-              class="user_free_item"
-              @click="handleToHasChoose(item.id)"
-            >
-              <div class="user_free_item_text">{{ item.title }}</div>
-              <div class="user_free_item_img">
-                <i class="el-icon-circle-plus"></i>
+          <el-row class="title">自定义名单收集模版</el-row>
+          <el-card shadow="never">
+            <div class="title_small">
+              <span>HCP 基本信息</span>
+              <span>
+                <el-button type="text" size="small">查看常用联系人</el-button>
+              </span>
+            </div>
+            <InputArea :inputInfo="userDefinedForm.hcpInfo" currentTime="hcpInfo"></InputArea>
+          </el-card>
+          <el-card shadow="never">
+            <div class="title_small">
+              <span>参会人参会信息</span>
+            </div>
+            <InputArea :inputInfo="userDefinedForm.participantInfo" currentTime="participantInfo"></InputArea>
+          </el-card>
+          <el-card shadow="never">
+            <div class="title_small">
+              <span>HCP 负责人（员工）基本信息</span>
+            </div>
+            <InputArea :inputInfo="userDefinedForm.staffInfo" currentTime="staffInfo"></InputArea>
+          </el-card>
+          <el-row class="title">自定义名单收集模版</el-row>
+          <el-card shadow="never">
+            <div class="title_small">
+              <span>添加自定义填写项</span>
+            </div>
+            <!-- 用户点击添加自定义选项按钮 -->
+            <div class="user_free_area">
+              <div
+                v-for="item in userDefined"
+                :key="item.id"
+                class="user_free_item"
+                @click="handleToHasChoose(item.id)"
+              >
+                <div class="user_free_item_text">{{ item.title }}</div>
+                <div class="user_free_item_img">
+                  <i class="el-icon-circle-plus"></i>
+                </div>
               </div>
             </div>
+          </el-card>
+          <el-card shadow="never">
+            <div class="title_small">
+              <span>自定义信息编辑</span>
+              <span>
+                <el-checkbox v-model="necessaryMode" disabled>设为必填项</el-checkbox>
+              </span>
+            </div>
+            <el-row v-for="item in hasChooseUserDefined" :key="item.id" :gutter="20">
+              <el-col class="item_label" :span="5">
+                {{
+                item.title + "："
+                }}
+              </el-col>
+              <el-col class="item_margin" :span="8">
+                <el-input v-model="item.input"></el-input>
+              </el-col>
+              <el-col style="line-height: 40px" :span="1">
+                <el-checkbox v-model="item.isnecessary"></el-checkbox>
+              </el-col>
+              <el-col :span="2">
+                <el-button type="danger" size="medium" plain @click="deleteUserDefine(item.id)">删除</el-button>
+              </el-col>
+            </el-row>
+          </el-card>
+          <div class="submitArea">
+            <div class="submitArea_row">
+              <el-button type="primary" plain>保存模版</el-button>
+              <el-button type="primary" plain>预览</el-button>
+              <el-button type="primary">立即使用</el-button>
+            </div>
           </div>
-        </el-card>
-        <el-card shadow="never">
-          <div class="title_small">
-            <span>自定义信息编辑</span>
-            <span>
-              <el-checkbox v-model="necessaryMode" disabled>设为必填项</el-checkbox>
-            </span>
-          </div>
-          <el-row v-for="item in hasChooseUserDefined" :key="item.id" :gutter="20">
-            <el-col class="item_label" :span="5">
-              {{
-              item.title + "："
-              }}
-            </el-col>
-            <el-col class="item_margin" :span="8">
-              <el-input v-model="item.input"></el-input>
-            </el-col>
-            <el-col style="line-height: 40px" :span="1">
-              <el-checkbox v-model="item.isnecessary"></el-checkbox>
-            </el-col>
-            <el-col :span="2">
-              <el-button type="danger" size="medium" plain @click="deleteUserDefine(item.id)">删除</el-button>
-            </el-col>
-          </el-row>
-        </el-card>
-        <div class="submitArea">
-          <div class="submitArea_row">
-            <el-button type="primary" plain>保存模版</el-button>
-            <el-button type="primary" plain>预览</el-button>
-            <el-button type="primary">立即使用</el-button>
-          </div>
-        </div>
         </el-form>
       </div>
     </div>
@@ -345,7 +345,6 @@ export default {
           },
         ],
       },
-    
     };
   },
   methods: {

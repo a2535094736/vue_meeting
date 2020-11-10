@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentNav:[],
+    currentNav: [],
     navList: [
       {
         id: "1",
@@ -14,10 +14,10 @@ export default new Vuex.Store({
           { id: "1", title: "会议信息配置", path: "/meetinginfoconfigure" },
           {
             id: "2",
-            title: "名单收集模版_首页",
+            title: "名单收集模版",
             path: "/meetingcollecthome",
+            childern: { id: "3", title: "自定义名单收集模版", path: "/meetingcollectmood" },
           },
-          { id: "3", title: "名单收集模版", path: "/meetingcollectmood" },
         ],
       },
       {
@@ -38,12 +38,12 @@ export default new Vuex.Store({
           { id: "3", title: "已结束会议", path: "/approvalfreelist" },
         ],
       },
-    ]
+    ],
   },
   mutations: {
-    changeCurrentNav(state,current){
-      state.currentNav = current
-    }
+    changeCurrentNav(state, current) {
+      state.currentNav = current;
+    },
   },
   actions: {},
   modules: {},

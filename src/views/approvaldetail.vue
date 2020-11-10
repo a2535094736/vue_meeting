@@ -62,6 +62,7 @@
             <p>飞机订单数量：{{ item.tAmount }}</p>
           </div>
           <el-button type="primary" size="default" class="approvelGoDetail"
+          @click="goApprovelIndividual(item.id)"
             >详情</el-button
           >
         </el-card>
@@ -155,6 +156,10 @@ export default {
           this.isIndeterminate = false;
         });
       }
+    },
+    // 详情页面审批
+    goApprovelIndividual(id){
+       this.$router.push({path:'/approvelindividual',query:{id:id}})
     },
     handleCheckedItemChange(value) {
       const checkList = [];

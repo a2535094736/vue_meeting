@@ -69,7 +69,7 @@ body,
 }
 .container .page .fix_sider {
   position: fixed;
-  top: 20px;
+  top: 80px;
 }
 .container .page .siderbar,
 .container .page .siderbar1 {

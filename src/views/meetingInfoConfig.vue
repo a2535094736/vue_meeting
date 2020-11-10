@@ -17,7 +17,7 @@
             <i class="el-icon-caret-top"></i>
           </div>
           <div class="submit_all_btn">
-            <el-button type="primary" size="default" @click="meetingInfoDetailSubmit">点击提交</el-button>
+            <el-button type="primary" size="default" @click="meetingInfoDetailSubmit">发 布</el-button>
           </div>
         </div>
       </div>
@@ -37,37 +37,43 @@
               currentTime="meetingKeyManInfo"
             ></InputArea>
 
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="meetingInfoFrom.EventApproverList" border style="width: 100%">
               <el-table-column type="index" width="80">
                 <template slot="header">序号</template>
               </el-table-column>
-              <el-table-column prop="date" label="会议关键人角色"></el-table-column>
-              <el-table-column prop="name" label="会议关键人姓名"></el-table-column>
-              <el-table-column prop="address" label="会议关键人手机号"></el-table-column>
-              <el-table-column prop="address" label="会议关键人邮箱"></el-table-column>
-              <el-table-column prop="address" label="会议关键人座机"></el-table-column>
+              <el-table-column prop="Identification" width="180" label="会议关键人角色"></el-table-column>
+              <el-table-column prop="ApproverName" label="会议关键人姓名"></el-table-column>
+              <el-table-column prop="ApproverMobile" label="会议关键人手机号"></el-table-column>
+              <el-table-column prop="ApproverEmail" label="会议关键人邮箱"></el-table-column>
             </el-table>
             <div class="title_small">
               <span>会议报价</span>
             </div>
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="meetingInfoFrom.EventBudgetList" border style="width: 100%">
               <el-table-column type="index" width="80">
                 <template slot="header">序号</template>
               </el-table-column>
-              <el-table-column prop="date" label="报价金额"></el-table-column>
-              <el-table-column prop="name" label="百分比"></el-table-column>
-              <el-table-column prop="address" label="成本中心"></el-table-column>
-              <el-table-column prop="address" label="GL ACCT"></el-table-column>
-              <el-table-column prop="address" label="WBS Code"></el-table-column>
+              <el-table-column prop="BudgetAmount" label="报价金额"></el-table-column>
+              <el-table-column prop="BudgetPercent" label="百分比"></el-table-column>
+              <el-table-column prop="CostCenter1" label="成本中心"></el-table-column>
+              <el-table-column>
+                <template slot="header">
+                  <span>*</span>GLACCT
+                </template>
+                <template slot-scope="scope">
+                  <el-input v-model="scope.row.GLAccount" placeholder="请输入GLA"></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="WbsElement" label="WBS Code"></el-table-column>
             </el-table>
             <InputArea :inputInfo="meetingInfoFrom.warningRate" currentTime="warningRate"></InputArea>
           </el-card>
           <el-card shadow="never">
             <div class="title_small slider_nav1">
               <span>会议审批设置</span>
-              <span>
+              <!-- <span>
                 <el-button type="text" size="small">查看预录入名单</el-button>
-              </span>
+              </span> -->
             </div>
             <InputArea
               :inputInfo="meetingInfoFrom.meetApprovalConfig"
@@ -96,7 +102,7 @@
         </el-form>
       </div>
     </div>
-    <div class="config_save_btn">save</div>
+    <!-- <div class="config_save_btn">save</div> -->
   </div>
 </template>
 
@@ -156,20 +162,21 @@ export default {
             type: "text",
           },
           {
-            name: "会议描述",
-            v_model: "meetPlace",
-            value: "",
-            isNecessary: true,
-            type: "text",
-          },
-          {
             name: "会议开始日期",
             v_model: "meetPlace",
             value: "",
             isNecessary: true,
             type: "date",
             pickerOptions: {
-              disabledDate: this.disabledDateCurrent,
+              disabledDate: (time) => {
+                const limitTime = this.meetingInfoFrom.meetingBaseInfo[5].value;
+                let _now = Date.now();
+                if (limitTime !== "") {
+                  const timestart = new Date(limitTime);
+                  return time.getTime() < _now || time.getTime() > timestart;
+                }
+                return time.getTime() < _now; //大于当前的禁止，小于7天前的禁止
+              },
             },
           },
           {
@@ -179,7 +186,63 @@ export default {
             isNecessary: true,
             type: "date",
             pickerOptions: {
-              disabledDate: this.disabledDateEnd,
+              disabledDate: (time) => {
+                const limitTime = this.meetingInfoFrom.meetingBaseInfo[4].value;
+                let _now = Date.now();
+                if (limitTime !== "") {
+                  const timestart = new Date(limitTime);
+                  return time.getTime() < _now || time.getTime() < timestart;
+                }
+                return time.getTime() < _now; //大于当前的禁止，小于7天前的禁止
+              },
+            },
+          },
+          {
+            name: "会议描述",
+            v_model: "meetPlace",
+            value: "",
+            isNecessary: true,
+            type: "text",
+          },
+        ],
+        // table表格数据
+        EventApproverList: [
+          {
+            $id: "12",
+            Identification: 1,
+            ApproverName: "董恺",
+            ApproverMobile: "13917020750",
+            ApproverEmail: "ryan.dong@efasco.com",
+            Event: {
+              $ref: "1",
+            },
+          },
+          {
+            $id: "13",
+            Identification: 3,
+            ApproverName: "韩黎诗",
+            ApproverMobile: "18917020750",
+            ApproverEmail: "melina.han@efasco.com",
+            Event: {
+              $ref: "1",
+            },
+          },
+        ],
+        EventBudgetList: [
+          {
+            $id: "4",
+            Identification: 1,
+            Seqno: 1,
+            BudgetAmount: 0,
+            BudgetPercent: 100,
+            CostCenter1: "1141012AHS",
+            GLAccount: "",
+            WbsElement: "",
+            GLAccountCode: "",
+            CostCenter2: "",
+            CostCenter3: "",
+            Event: {
+              $ref: "1",
             },
           },
         ],
@@ -196,7 +259,7 @@ export default {
             name: "行程安排",
             v_model: "meetPlace",
             value: "",
-            isNecessary: true,
+            isNecessary: false,
             type: "textarea",
             width: 24,
           },
@@ -270,6 +333,19 @@ export default {
             value: "",
             isNecessary: true,
             type: "date",
+            pickerOptions: {
+              disabledDate: (time) => {
+                const limitTime = this.meetingInfoFrom.meetingBaseInfo[4].value;
+                let _now = Date.now();
+                if (limitTime !== "") {
+                  const timestart = new Date(limitTime);
+                  return (
+                    time.getTime() < _now || time.getTime() > timestart - 8.64e7
+                  );
+                }
+                return time.getTime() < _now; //大于当前的禁止，小于7天前的禁止
+              },
+            },
           },
           {
             name: "名单收集N天提醒",
@@ -299,15 +375,70 @@ export default {
           },
         ],
       },
-
-      // https://blog.csdn.net/belalds/article/details/82428098
-      // 参考案例
-      rules: {
-        value: [{ required: true, message: "zzzz不能为空", trigger: "blur" }],
-      },
+      // 会议审批设置
+      meetApprovalConfig: [
+        {
+          name: "大交通是否需要审批", // inputLable的中文
+          v_model: "meetDepartment",
+          value: "", // 输入框的值
+          isNecessary: true, // 是否为必填项
+          type: "radioButton", // 输入框的类型
+          option: ["需要", "不需要"],
+        },
+        {
+          name: "退改签免批", // inputLable的中文
+          v_model: "meetDepartment",
+          value: "", // 输入框的值
+          isNecessary: true, // 是否为必填项
+          type: "radioButton", // 输入框的类型
+          option: ["需要", "不需要"],
+        },
+        {
+          name: "退改签免批", // inputLable的中文
+          v_model: "meetDepartment",
+          value: "", // 输入框的值
+          isNecessary: false, // 是否为必填项
+          type: "radio", // 输入框的类型
+        },
+      ],
+      listCollectConfigDate: [
+        {
+          name: "名单收集结束日期",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "date",
+        },
+        {
+          name: "名单收集N天提醒",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "textNumber",
+          tip: "距名单收集结束前N天起，会议关键人（会议组织者）将收到提醒",
+        },
+      ],
+      listCollectConfigStatus: [
+        {
+          name: "名单收集状态",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "radio",
+          option: ["暂停收集", "恢复收集"],
+        },
+        {
+          name: "会议密码设置",
+          v_model: "meetPlace",
+          value: "",
+          isNecessary: true,
+          type: "text",
+          tip: "代表需要输入该会议密码才能访问会议名单收集链接",
+        },
+      ],
       timer: "",
       // axios数据
-      axiosDate:{}
+      axiosDate: {},
     };
   },
   computed: {
@@ -372,11 +503,11 @@ export default {
         )
         .then((response) => {
           console.log(response);
-          if(response.status !==200){
-            return this.$message.error('获取数据失败')
+          if (response.status !== 200) {
+            return this.$message.error("获取数据失败");
           }
-          this.$message.success('获取数据成功')
-          this.axiosDate = response.data
+          this.$message.success("获取数据成功");
+          this.axiosDate = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -449,5 +580,8 @@ export default {
   text-align: center;
   line-height: 40px;
   color: #1989fa;
+}
+.el-table th > .cell span {
+  color: red;
 }
 </style>
