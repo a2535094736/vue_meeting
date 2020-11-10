@@ -10,22 +10,44 @@
       <div class="mainer">
         <el-row class="title">会议模版选择</el-row>
         <el-table :data="changeArray" border style="width: 100%">
-          <el-table-column prop="TemplateName" label="可用模板名称"></el-table-column>
+          <el-table-column
+            prop="TemplateName"
+            label="可用模板名称"
+          ></el-table-column>
           <el-table-column prop="BudgetPercent" label="备注"></el-table-column>
           <el-table-column prop="UpdateBy" label="编辑人"></el-table-column>
-          <el-table-column prop="UpdateDateTime" label="最终修改时间"></el-table-column>
-          <el-table-column>
+          <el-table-column
+            prop="UpdateDateTime"
+            label="最终修改时间"
+          ></el-table-column>
+          <el-table-column class="btn_group">
             <template slot="header">操作</template>
             <template slot-scope="scope">
-              <el-button type="primary" @click="goMeetingcollectmood(scope.row.$id)" size="small">编辑</el-button>
-              <el-button type="danger" size="small">删除</el-button>
+              <el-button
+                type="primary"
+                @click="goMeetingcollectmood(scope.row.$id)"
+                size="small"
+                >编辑</el-button
+              >
+              <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                icon="el-icon-info"
+                icon-color="red"
+                @onConfirm="delectcurrentItem(scope.row.$id)"
+                title="确定删除当前模板吗？"
+              >
+                <el-button type="danger"  slot="reference" size="small">删除</el-button>
+              </el-popconfirm>
               <el-button type="primary" size="small">启用</el-button>
             </template>
           </el-table-column>
         </el-table>
         <div class="submitArea">
           <div class="submitArea_row">
-            <el-button type="primary" plain>添加自定义模板</el-button>
+            <el-button type="primary" plain @click="goMeetingcollectmood"
+              >添加自定义模板</el-button
+            >
           </div>
         </div>
       </div>
@@ -154,8 +176,20 @@ export default {
   },
   methods: {
     goMeetingcollectmood(id) {
-      this.$router.push({ path: "/meetingcollectmood", query: { id: id } });
+      console.log(typeof id);
+      if (typeof id !== "string") {
+        this.$router.push({ path: "/meetingcollectmood" });
+      } else {
+        this.$router.push({
+          path: "/meetingcollectmood",
+          query: { id: id || "" },
+        });
+      }
     },
+    // 删除当前模板
+    delectcurrentItem(id){
+      
+    }
   },
   computed: {
     changeArray() {
@@ -169,7 +203,7 @@ export default {
 };
 </script>
 
-<style lang='less'>
+<style lang="less">
 .mainer {
   .formatarea {
     width: 630px;
@@ -199,6 +233,11 @@ export default {
         width: 100%;
         height: 100%;
       }
+    }
+  }
+  .btn_group{
+    .el-button{
+      margin: 10px 0;
     }
   }
 }
