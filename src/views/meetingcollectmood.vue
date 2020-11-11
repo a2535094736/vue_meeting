@@ -12,19 +12,19 @@
           <el-row class="title">自定义名单收集模版</el-row>
           <el-card shadow="never">
             <div class="title_small">
-              <span>HCP 基本信息</span>
-              <span>
+              <span>HCP 基本信息(必填)</span>
+              <!-- <span>
                 <el-button type="text" size="small">查看常用联系人</el-button>
-              </span>
+              </span>-->
             </div>
             <InputArea :inputInfo="userDefinedForm.hcpInfo" currentTime="hcpInfo"></InputArea>
           </el-card>
-          <el-card shadow="never">
+          <!-- <el-card shadow="never">
             <div class="title_small">
               <span>参会人参会信息</span>
             </div>
             <InputArea :inputInfo="userDefinedForm.participantInfo" currentTime="participantInfo"></InputArea>
-          </el-card>
+          </el-card> -->
           <el-card shadow="never">
             <div class="title_small">
               <span>HCP 负责人（员工）基本信息</span>
@@ -155,23 +155,8 @@ export default {
             type: "text", // 输入框的类型
           },
           {
-            name: "HCP 单位所在城市",
-            v_model: "hcpcompanycity",
-            value: "",
-            isNecessary: true,
-            type: "text",
-          },
-          {
-            name: "HCP 性别",
-            v_model: "hcpgender",
-            value: "",
-            isNecessary: true,
-            type: "select",
-            option: ["男", "女"],
-          },
-          {
-            name: "HCP 所在城市",
-            v_model: "hcpcity",
+            name: "HCP 在科室",
+            v_model: "hcpdepartment",
             value: "",
             isNecessary: true,
             type: "text",
@@ -184,118 +169,96 @@ export default {
             type: "text",
           },
           {
-            name: "HCP 所在医院",
-            v_model: "hcphospital",
-            value: "",
-            isNecessary: true,
-            type: "text",
-          },
-          {
-            name: "HCP 证件类型",
-            v_model: "hcpidcardtype",
-            value: "",
-            isNecessary: true,
-            type: "select",
-            option: ["身份证", "港澳通行证", "护照"],
-          },
-          {
-            name: "HCP 在科室",
-            v_model: "hcpdepartment",
-            value: "",
-            isNecessary: true,
-            type: "text",
-          },
-          {
-            name: "HCP 证件号",
-            v_model: "hcpidnumber",
-            value: "",
-            isNecessary: true,
-            type: "text",
-          },
-          {
             name: "HCP 职务",
             v_model: "hcptitle",
             value: "",
             isNecessary: true,
             type: "text",
           },
-        ],
-        //参会人参会信息
-        participantInfo: [
           {
-            name: "客户类型",
-            v_modle: "",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-            option: ["HCP", "员工"],
-          },
-          {
-            name: "HCP 是否需要陪同",
-            v_modle: "",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-          },
-          {
-            name: "房间需求",
-            v_modle: "",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-            option: ["单间", "标间"],
-          },
-          {
-            name: "是否为本次会议主席/讲者",
-            v_modle: "",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-          },
-          {
-            name: "同住人",
-            v_modle: "",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-            option: ["随机安排", "有"],
-          },
-          {
-            name: "火车票是否接受二等座",
-            v_modle: "",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-          },
-          {
-            name: "是否需要大交通",
-            v_modle: "",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-            hasCheck: true,
-            checkbox: [],
-            checkList: ["飞机", "火车"],
-          },
-          {
-            name: "是否参加晚宴",
-            v_modle: "",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-          },
-        ],
-        // HCP 负责人（员工）基本信息
-        staffInfo: [
-          {
-            name: "负责同事姓名",
-            v_model: "meetPlace",
+            name: "HCP所在单位",
+            v_model: "HCPHospital",
             value: "",
             isNecessary: true,
             type: "text",
           },
           {
-            name: "所属销售区域会议状态",
+            name: "客户类型",
+            v_model: "HCPType",
+            value: "",
+            isNecessary: true,
+            type: "text",
+          },
+        ],
+        //参会人参会信息
+        // participantInfo: [
+        //   {
+        //     name: "客户类型",
+        //     v_modle: "",
+        //     value: "",
+        //     isNecessary: true,
+        //     type: "radio",
+        //     option: ["HCP", "员工"],
+        //   },
+        //   {
+        //     name: "HCP 是否需要陪同",
+        //     v_modle: "",
+        //     value: "",
+        //     isNecessary: true,
+        //     type: "radio",
+        //   },
+        //   {
+        //     name: "房间需求",
+        //     v_modle: "",
+        //     value: "",
+        //     isNecessary: true,
+        //     type: "radio",
+        //     option: ["单间", "标间"],
+        //   },
+        //   {
+        //     name: "是否为本次会议主席/讲者",
+        //     v_modle: "",
+        //     value: "",
+        //     isNecessary: true,
+        //     type: "radio",
+        //   },
+        //   {
+        //     name: "同住人",
+        //     v_modle: "",
+        //     value: "",
+        //     isNecessary: true,
+        //     type: "radio",
+        //     option: ["随机安排", "有"],
+        //   },
+        //   {
+        //     name: "火车票是否接受二等座",
+        //     v_modle: "",
+        //     value: "",
+        //     isNecessary: true,
+        //     type: "radio",
+        //   },
+        //   {
+        //     name: "是否需要大交通",
+        //     v_modle: "",
+        //     value: "",
+        //     isNecessary: true,
+        //     type: "radio",
+        //     hasCheck: true,
+        //     checkbox: [],
+        //     checkList: ["飞机", "火车"],
+        //   },
+        //   {
+        //     name: "是否参加晚宴",
+        //     v_modle: "",
+        //     value: "",
+        //     isNecessary: true,
+        //     type: "radio",
+        //   },
+        // ],
+        // HCP 负责人（员工）基本信息
+        staffInfo: [
+          {
+            name: "负责同事姓名",
             v_model: "meetPlace",
             value: "",
             isNecessary: true,
@@ -309,25 +272,11 @@ export default {
             type: "text",
           },
           {
-            name: "火车票是否接受二等座",
-            v_model: "meetPlace",
-            value: "",
-            isNecessary: true,
-            type: "radio",
-          },
-          {
             name: "现场陪同人员",
             v_model: "meetPlace",
             value: "",
             isNecessary: true,
             type: "text",
-          },
-          {
-            name: "员工是否参加晚宴",
-            v_model: "meetPlace",
-            value: "",
-            isNecessary: true,
-            type: "radio",
           },
           {
             name: "现场陪同人员手机号",

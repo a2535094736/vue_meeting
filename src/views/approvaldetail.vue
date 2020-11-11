@@ -8,23 +8,25 @@
         </div>
       </div>
       <div class="mainer">
-        <el-row class="title">会议编号：EPG567</el-row>
+        <el-row class="title">会议编号：{{eorder_no}}</el-row>
         <el-row class="title meeting_precent"
+        v-if="fareRate !==-1"
           >当前使用额度：<el-progress
-            :percentage="90"
+          
+            :percentage="fareRate"
             :color="customColors"
           ></el-progress
         ></el-row>
         <QuickSearch :queryitem="queryItem"></QuickSearch>
         <el-row class="marginb20">
           <el-radio-group v-model="approvelStatus">
-            <el-badge :value="28" type="primary" class="approvelStatusBadge">
+            <el-badge :value="waitapprovelLength('待审批')" type="primary" class="approvelStatusBadge">
               <el-radio-button label="待审批"></el-radio-button>
             </el-badge>
-            <el-badge :value="19" type="success" class="approvelStatusBadge">
+            <el-badge :value="waitapprovelLength('已审批')" type="success" class="approvelStatusBadge">
               <el-radio-button label="已审批"></el-radio-button>
             </el-badge>
-            <el-badge :value="7" class="approvelStatusBadge">
+            <el-badge :value="waitapprovelLength('已拒绝')" class="approvelStatusBadge">
               <el-radio-button label="已拒绝"></el-radio-button>
             </el-badge>
           </el-radio-group>
@@ -37,13 +39,14 @@
             >全选</el-checkbox
           ><span
             ><el-button icon="el-icon-finished" type="text" size="small"
+            @click="changeRange"
               >按审批时间排列</el-button
             ></span
           >
         </div>
         <el-card
-          v-for="item in orderInfo"
-          :key="item.id"
+          v-for="item in waitapprovel(approvelStatus)"
+          :key="item.IdNo"
           class="approvelItem approvelItem1"
           shadow="never"
         >
@@ -54,15 +57,15 @@
             ></el-checkbox>
           </div>
           <div class="approvelItemInfo">
-            <p>姓名：{{ item.name }}</p>
+            <p>姓名：{{ item.paxname }}</p>
             <p>医院：{{ item.hospital }}</p>
-            <p>最晚审批时限：{{ item.deadline }}</p>
-            <p>订单价格：{{ item.orderFare }}</p>
-            <p>火车订单数量：{{ item.fAmount }}</p>
-            <p>飞机订单数量：{{ item.tAmount }}</p>
+            <p>最晚审批时限：{{ item.deadlineapprovel }}</p>
+            <p>订单价格：{{item.totalprice}}</p>
+            <p>火车订单数量：{{ item.trans.length }}</p>
+            <p>飞机订单数量：{{ item.trips.length }}</p>
           </div>
           <el-button type="primary" size="default" class="approvelGoDetail"
-          @click="goApprovelIndividual(item.id)"
+          @click="goApprovelIndividual(item)"
             >详情</el-button
           >
         </el-card>
@@ -98,6 +101,7 @@ export default {
       isIndeterminate: true,
       checkAll: false,
       checked: true,
+      fareRate:-1,
       queryItem: [
         {
           title: "输入乘机人姓名",
@@ -119,31 +123,67 @@ export default {
         { color: "#67C23A", percentage: 60 },
         { color: "#F56C6C", percentage: 80 },
       ],
+      eorder_no:'',
       orderInfo: [
-        {
-          id: 1,
-          name: "张**",
-          hospital: "上海市第一人民医院",
-          deadline: "2020-11-09 12:45:26",
-          orderFare: 1733.0,
-          fAmount: 1,
-          tAmount: 1,
-          isCheckd: true,
-        },
-        {
-          id: 2,
-          name: "刘**",
-          hospital: "上海市第一人民医院",
-          deadline: "2020-11-09 12:45:26",
-          orderFare: 2721.0,
-          fAmount: 1,
-          tAmount: 1,
-          isCheckd: false,
-        },
+        
       ],
     };
   },
+  created() {
+    const orderInfo = JSON.parse(this.$route.query.trip);
+    console.log(orderInfo);
+    this.eorder_no = orderInfo.trip.eorder_no
+    this.orderInfo = orderInfo.trip? orderInfo.trip.list:[];
+    if(orderInfo.meetingStatus ==="参会名单收集中"){
+      this.fareRate = Math.floor((orderInfo.cost / orderInfo.gross) * 100)
+    }
+  },
+  computed: {
+    waitapprovel(){
+      const that = this
+      return function(a){
+        const currentCate = [];
+        that.orderInfo.map(function(v,i){
+          if(v.approvelstatus === a){
+            let totalprice = 0;
+            v.trips.map(function(j,k){
+              totalprice += (j.price*1+j.tax*1);
+              
+            })
+            v.trans.map(function(j,k){
+              totalprice += (j.price*1+j.tax*1);
+              
+            })
+            v.totalprice = totalprice.toFixed(2)
+            currentCate.push(v)
+          }
+          
+        })
+        return currentCate
+      }
+    },
+    waitapprovelLength(){
+      const that = this
+      return function(a){
+        const currentCate1 = [];
+        that.orderInfo.map(function(v,i){
+          if(v.approvelstatus ===a){
+            currentCate1.push(v)
+          }
+          
+        })
+        return currentCate1.length
+      }
+    }
+  },
   methods: {
+    // 修改审批顺序
+    changeRange(){
+      this.orderInfo.sort(function(a,b){
+        return new Date(a.deadlineapprovel)>new Date(b.deadlineapprovel)?1:-1
+      })
+
+    },
     handleCheckAllChange(val) {
       if (this.checkAll) {
         this.orderInfo.map((item) => {
@@ -159,7 +199,7 @@ export default {
     },
     // 详情页面审批
     goApprovelIndividual(id){
-       this.$router.push({path:'/approvelindividual',query:{id:id}})
+       this.$router.push({path:'/approvelindividual',query:{id:JSON.stringify(id),eorder_no:this.eorder_no}})
     },
     handleCheckedItemChange(value) {
       const checkList = [];
