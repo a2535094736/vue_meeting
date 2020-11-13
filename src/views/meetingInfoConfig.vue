@@ -502,7 +502,6 @@ export default {
           "https://ezway.efasco.com/RocheService/Service.asmx/GetEvent?eventid=1"
         )
         .then((response) => {
-          console.log(response);
           if (response.status !== 200) {
             return this.$message.error("获取数据失败");
           }

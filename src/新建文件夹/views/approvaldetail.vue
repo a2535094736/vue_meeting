@@ -47,7 +47,7 @@
             <el-checkbox v-model="item.isCheckd" @change="handleCheckedItemChange"></el-checkbox>
           </div>
           <div class="approvelItemInfo">
-            <el-row :gutter="20">
+            <el-row :gutter='20'>
               <el-col class="approvelItemInfo_border_right" :span="12">
                 <p>姓名：{{ item.paxname }}</p>
                 <p>医院：{{ item.hospital }}</p>
@@ -67,9 +67,8 @@
             @click="goApprovelIndividual(item)"
           >详情</el-button>
         </el-card>
-        <div class="submitArea">
-          <el-pagination
-            v-if="isNecessarypagination"
+        <div  class="submitArea">
+          <el-pagination v-if="isNecessarypagination"
             background
             :page-sizes="[10, 20, 30]"
             :page-size="10"
@@ -94,7 +93,7 @@ import { log } from "util";
 export default {
   data() {
     return {
-      isNecessarypagination: false,
+      isNecessarypagination:false,
       approvelStatus: "待审批",
       siderItem: "审批单明细",
       isIndeterminate: true,
@@ -128,6 +127,7 @@ export default {
   },
   created() {
     const orderInfo = JSON.parse(this.$route.query.trip);
+    console.log(orderInfo);
     this.eorder_no = orderInfo.trip.eorder_no;
     this.orderInfo = orderInfo.trip ? orderInfo.trip.list : [];
     if (orderInfo.meetingStatus === "参会名单收集中") {
@@ -137,29 +137,35 @@ export default {
   },
   computed: {
     waitapprovel() {
+      const that = this;
       return function (a) {
-        const currentArr = [];
-        this.orderInfo.forEach((p, c) => {
-          if (p.approvelstatus === a) {
-            let totalPrice = 0;
-            totalPrice += p.trips.reduce((i, j) => i + +j.price + +j.tax, 0);
-            totalPrice += p.trans.reduce((i, j) => i + +j.price + +j.tax, 0);
-            p.totalprice = totalPrice.toFixed(2);
-            currentArr.push(p);
+        const currentCate = [];
+        that.orderInfo.map(function (v, i) {
+          if (v.approvelstatus === a) {
+            let totalprice = 0;
+            v.trips.map(function (j, k) {
+              totalprice += j.price * 1 + j.tax * 1;
+            });
+            v.trans.map(function (j, k) {
+              totalprice += j.price * 1 + j.tax * 1;
+            });
+            v.totalprice = totalprice.toFixed(2);
+            currentCate.push(v);
           }
         });
-        return currentArr;
+        return currentCate;
       };
     },
     waitapprovelLength() {
+      const that = this;
       return function (a) {
-        let len = this.orderInfo.reduce((p, c) => {
-          if (c.approvelstatus === a) {
-            p += 1;
+        const currentCate1 = [];
+        that.orderInfo.map(function (v, i) {
+          if (v.approvelstatus === a) {
+            currentCate1.push(v);
           }
-          return p;
-        }, 0);
-        return len;
+        });
+        return currentCate1.length;
       };
     },
   },
@@ -195,15 +201,15 @@ export default {
     handleCheckedItemChange(value) {
       const checkList = [];
       const waitApprovel = [];
-      let orderLength = this.orderInfo.reduce((p, c) => {
-        if (c.approvelstatus === "待审批") {
-          p += 1;
+      let orderLength = 0;
+      this.orderInfo.map((item) => {
+        if (item.approvelstatus === "待审批") {
+          orderLength += 1;
         }
-        if (c.isCheckd && c.approvelstatus === "待审批") {
-          checkList.push(c);
+        if (item.isCheckd && item.approvelstatus === "待审批") {
+          checkList.push(item);
         }
-        return p;
-      }, 0);
+      });
       this.checkAll = checkList.length == orderLength;
       this.isIndeterminate =
         checkList.length > 0 && checkList.length < orderLength;
@@ -221,10 +227,11 @@ export default {
 .meeting_precent {
   display: flex;
 }
-.approvelItemInfo {
+.approvelItemInfo{
   width: 100%;
+ 
 }
-.approvelItemInfo_border_right {
+.approvelItemInfo_border_right{
   border-right: 1px dotted #EBEEF5;
 }
 
